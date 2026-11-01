@@ -1,0 +1,84 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import { news, photos, videos } from "@/content/gallery";
+import { PageHero, Pending, PhotoSlot, Section, SectionTitle } from "@/components/ui";
+
+export const metadata: Metadata = {
+  title: "Galería y comunidad",
+  description: "Fotos, videos y noticias del equipo Tritotal Team: entrenamientos, competencias y actividades.",
+};
+
+const categories = ["Equipo", "Entrenamientos", "Competencias", "Actividades sociales"] as const;
+
+export default function GaleriaPage() {
+  return (
+    <>
+      <PageHero eyebrow="Galería y comunidad" title={<>Vive el <span className="text-sport">equipo</span></>} intro="Fotos del equipo, entrenamientos, competencias, actividades sociales, videos y noticias." />
+
+      <Section>
+        {categories.map((cat) => {
+          const items = photos.filter((p) => p.category === cat);
+          return (
+            <div key={cat} className="mb-16 last:mb-0">
+              <h2 className="mb-6 font-display text-3xl font-bold uppercase">{cat}</h2>
+              {items.length ? (
+                <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
+                  {items.map((p) => (
+                    <div key={p.src} className="relative aspect-square overflow-hidden bg-petrol-900">
+                      <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 25vw, 50vw" className="object-cover transition hover:scale-105" />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+                  {Array.from({ length: 4 }).map((_, i) => (
+                    <PhotoSlot key={i} alt="" label="Foto pendiente" className="aspect-square" />
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </Section>
+
+      <Section className="bg-petrol-950">
+        <SectionTitle eyebrow="Videos" title="Videos" />
+        {videos.length ? (
+          <div className="grid gap-6 md:grid-cols-2">
+            {videos.map((v) => (
+              <div key={v.youtubeId} className="aspect-video overflow-hidden rounded-sm">
+                <iframe
+                  className="h-full w-full"
+                  src={`https://www.youtube-nocookie.com/embed/${v.youtubeId}`}
+                  title={v.title}
+                  loading="lazy"
+                  allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Pending label="Videos por agregar" hint="Agregar IDs de YouTube en src/content/gallery.ts" />
+        )}
+      </Section>
+
+      <Section>
+        <SectionTitle eyebrow="Noticias" title="Noticias del equipo" />
+        {news.length ? (
+          <div className="grid gap-6 md:grid-cols-3">
+            {news.map((n) => (
+              <article key={n.title} className="border-t-2 border-sport pt-5">
+                <p className="text-sm text-mist">{n.date}</p>
+                <h3 className="mt-2 font-display text-2xl font-bold uppercase">{n.title}</h3>
+                <p className="mt-2 text-mist">{n.summary}</p>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <Pending label="Noticias por publicar" />
+        )}
+      </Section>
+    </>
+  );
+}

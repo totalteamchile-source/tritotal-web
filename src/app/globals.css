@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Identidad visual Tritotal Team */
+@theme {
+  --color-ink: #05090b;          /* negro de fondo */
+  --color-petrol-950: #061519;   /* azul petróleo muy oscuro */
+  --color-petrol-900: #0a2229;
+  --color-petrol-800: #0f313a;
+  --color-petrol-700: #16444f;
+  --color-petrol-500: #2a7584;
+  --color-petrol-300: #7fb7c2;
+  --color-sport: #ff6a13;        /* naranja deportivo (sujeto a aprobación) */
+  --color-sport-600: #e55a0a;
+  --color-mist: #c9d6d9;         /* texto secundario */
+
+  --font-display: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-barlow), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+html { scroll-behavior: smooth; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+html { color-scheme: dark; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-ink);
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--color-sport); color: #fff; }
+
+/* Líneas de pista: textura sutil para fondos */
+.bg-lanes {
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent 0 46px,
+    rgb(255 255 255 / 0.025) 46px 48px
+  );
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px rgb(255 255 255 / 0.85);
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }

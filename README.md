@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tritotal Team – Sitio web oficial
 
-## Getting Started
+Next.js 15 · React 19 · TypeScript · Tailwind CSS 4.
 
-First, run the development server:
+## Cómo ejecutarlo
+
+Requisitos: Node.js 20 o superior.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build && npm start   # versión de producción
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Dónde se edita el contenido
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Qué | Archivo |
+|---|---|
+| WhatsApp, Instagram, correo, logos | `src/config/site.ts` |
+| Historia, misión, visión, valores, entrenadores | `src/content/about.ts` |
+| Disciplinas y preparación específica | `src/content/trainings.ts` |
+| Planes y precios | `src/content/plans.ts` |
+| Horarios, competencias y resultados | `src/content/events.ts` |
+| Fotos, videos y noticias | `src/content/gallery.ts` (fotos en `public/fotos/`) |
+| Términos / datos personales | `src/app/terminos`, `src/app/privacidad` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Todo campo en `null` o lista vacía se muestra en el sitio como **"pendiente"**; no se inventa información.
 
-## Learn More
+### Logotipos
+1. Copiar las versiones blancas (PNG/SVG transparente) a `public/brand/`.
+2. En `src/config/site.ts → logos`, indicar `src`, `width` y `height` reales del archivo. El componente respeta la proporción original.
 
-To learn more about Next.js, take a look at the following resources:
+### Dominio
+Definir `NEXT_PUBLIC_SITE_URL` (ej. en Vercel) para SEO, sitemap y Open Graph.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Identidad visual
+- Fondo: negro `#05090b` y azul petróleo `#061519` → `#16444f`
+- Acento: naranja deportivo `#ff6a13` (sujeto a aprobación)
+- Tipografías: Barlow Condensed (títulos) y Barlow (texto)
+- Tokens en `src/app/globals.css`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Etapas
+- [x] Etapa 1 – Diseño: identidad, portada, menú, versión móvil
+- [x] Etapa 2 – Páginas: Inicio, Nosotros, Entrenamientos, Planes, Competencias/Resultados, Galería, Contacto
+- [~] Etapa 3 – Inscripciones: formulario con validación y confirmación por WhatsApp listo; falta base de datos (Supabase) y aviso al administrador
+- [ ] Etapa 4 – Pagos (Webpay / Mercado Pago) y mensualidades
+- [ ] Etapa 5 – Panel de administración
+- [ ] Etapa 6 – Pruebas y publicación

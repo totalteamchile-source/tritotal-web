@@ -1,103 +1,175 @@
-import Image from "next/image";
+import Link from "next/link";
+import { disciplines, programs } from "@/content/trainings";
+import { heroPhotos } from "@/content/gallery";
+import { disciplineIcon } from "@/components/Icons";
+import { ButtonLink, Eyebrow, PhotoSlot, Section, SectionTitle, ArrowIcon } from "@/components/ui";
+import { whatsappLink } from "@/lib/whatsapp";
+import { WhatsAppIcon } from "@/components/Icons";
+
+const pillars = [
+  { n: "01", title: "Disciplina", text: "Cada sesión tiene un propósito dentro de tu planificación." },
+  { n: "02", title: "Superación", text: "Objetivos medibles para avanzar temporada a temporada." },
+  { n: "03", title: "Comunidad", text: "Entrenar acompañado hace que los kilómetros pesen menos." },
+  { n: "04", title: "Competitividad", text: "Preparación específica para llegar a tu carrera en tu mejor forma." },
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+    <>
+      {/* PORTADA */}
+      <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink">
+        {/* Tríptico de disciplinas */}
+        <div className="absolute inset-0 grid grid-cols-3 gap-1 lg:-mx-[6%] lg:-skew-x-6">
+          {disciplines.map((d, i) => (
+            <PhotoSlot
+              key={d.id}
+              src={heroPhotos[d.id]}
+              alt={`Deportista Tritotal Team en ${d.name.toLowerCase()}`}
+              discipline={d.id}
+              label={d.name}
+              priority={i === 0}
+              className="h-full lg:[&>*]:skew-x-6"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/40 to-transparent" />
+
+        <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-16 pt-28 sm:px-6 lg:justify-center lg:px-8 lg:pb-24">
+          <Eyebrow>Natación · Ciclismo · Running</Eyebrow>
+          <h1 className="max-w-5xl font-display text-[clamp(3rem,10vw,8.5rem)] font-extrabold uppercase leading-[0.86] tracking-tight">
+            Supera tus límites.
+            <br />
+            <span className="text-sport">Construye tu</span> <span className="text-outline">mejor versión.</span>
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist sm:text-xl">
+            Entrenamos personas, formamos deportistas y construimos una comunidad apasionada por el triatlón.
+          </p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <ButtonLink href="/inscripcion">
+              Únete a Tritotal Team <ArrowIcon className="h-5 w-5" />
+            </ButtonLink>
+            <ButtonLink href="/entrenamientos" variant="outline">
+              Conoce nuestros entrenamientos
+            </ButtonLink>
+            <ButtonLink href={whatsappLink("Hola, quiero hablar con el entrenador de Tritotal Team.")} variant="whatsapp" external>
+              <WhatsAppIcon className="h-5 w-5" /> Habla con el entrenador
+            </ButtonLink>
+          </div>
+        </div>
+
+        {/* Distancias */}
+        <div className="relative border-t border-white/10 bg-ink/70 backdrop-blur">
+          <div className="mx-auto grid max-w-7xl grid-cols-3 divide-x divide-white/10 px-4 sm:px-6 lg:px-8">
+            {[
+              ["3,8 km", "Nado"],
+              ["180 km", "Bici"],
+              ["42,2 km", "Trote"],
+            ].map(([v, l]) => (
+              <div key={l} className="py-4 text-center sm:py-6">
+                <p className="font-display text-2xl font-bold sm:text-4xl">{v}</p>
+                <p className="text-[11px] uppercase tracking-[0.25em] text-mist">{l}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DISCIPLINAS */}
+      <Section className="bg-lanes">
+        <SectionTitle
+          eyebrow="Entrenamientos"
+          title={<>Tres disciplinas.<br />Un solo objetivo.</>}
+          intro="Planificamos natación, ciclismo y running como un todo, para que llegues a la línea de partida preparado."
+        />
+        <div className="grid gap-5 md:grid-cols-3">
+          {disciplines.map((d) => {
+            const Icon = disciplineIcon[d.id];
+            return (
+              <Link
+                key={d.id}
+                href={`/entrenamientos#${d.id}`}
+                className="group relative flex flex-col overflow-hidden rounded-sm border border-white/10 bg-petrol-950 transition hover:border-sport/60"
+              >
+                <PhotoSlot src={heroPhotos[d.id]} alt={d.name} discipline={d.id} label={d.name} className="aspect-[4/3]" />
+                <div className="flex flex-1 flex-col p-6">
+                  <div className="flex items-center gap-3">
+                    <Icon className="h-8 w-8 text-sport" />
+                    <h3 className="font-display text-3xl font-bold uppercase">{d.name}</h3>
+                  </div>
+                  <p className="mt-3 text-mist">{d.tagline}</p>
+                  <ul className="mt-5 space-y-2 text-sm">
+                    {d.focus.map((f) => (
+                      <li key={f} className="flex gap-2"><span className="mt-2 h-1 w-3 shrink-0 bg-sport" />{f}</li>
+                    ))}
+                  </ul>
+                  <span className="mt-6 inline-flex items-center gap-2 font-display font-semibold uppercase tracking-wider text-sport">
+                    Ver más <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </Section>
+
+      {/* PREPARACIÓN ESPECÍFICA */}
+      <Section className="bg-petrol-950">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-20">
+          <SectionTitle
+            eyebrow="Preparación específica"
+            title={<>Del primer triatlón al <span className="text-sport">Full Ironman</span></>}
+            intro="Preparación orientada a tu competencia objetivo, con una progresión pensada para tu experiencia."
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+          <ol className="divide-y divide-white/10 border-y border-white/10">
+            {programs.map((p, i) => (
+              <li key={p.name} className="flex gap-6 py-6">
+                <span className="font-display text-4xl font-extrabold text-petrol-500">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="font-display text-2xl font-bold uppercase">{p.name}</h3>
+                  <p className="mt-1 text-mist">{p.detail}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </Section>
+
+      {/* PILARES */}
+      <Section>
+        <SectionTitle eyebrow="Cómo entrenamos" title="Lo que nos mueve" />
+        <div className="grid gap-px overflow-hidden rounded-sm bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
+          {pillars.map((p) => (
+            <div key={p.n} className="bg-ink p-8">
+              <p className="font-display text-sm font-bold text-sport">{p.n}</p>
+              <h3 className="mt-3 font-display text-3xl font-bold uppercase">{p.title}</h3>
+              <p className="mt-3 text-mist">{p.text}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-10 flex flex-wrap gap-4">
+          <ButtonLink href="/nosotros" variant="outline">Conoce al equipo</ButtonLink>
+          <ButtonLink href="/planes" variant="ghost">Ver planes <ArrowIcon className="h-5 w-5" /></ButtonLink>
+        </div>
+      </Section>
+
+      {/* CTA FINAL */}
+      <section className="relative overflow-hidden bg-sport">
+        <div className="bg-lanes absolute inset-0 opacity-60" />
+        <div className="relative mx-auto flex max-w-7xl flex-col items-start gap-8 px-4 py-16 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-20">
+          <h2 className="max-w-2xl font-display text-4xl font-extrabold uppercase leading-[0.95] sm:text-6xl">
+            Tu próxima meta empieza hoy.
+          </h2>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <ButtonLink href="/inscripcion" variant="dark">
+              Inscríbete
+            </ButtonLink>
+            <ButtonLink href={whatsappLink()} external variant="outlineDark">
+              <WhatsAppIcon className="h-5 w-5" /> Escríbenos
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
