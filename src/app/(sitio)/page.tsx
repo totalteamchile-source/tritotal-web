@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { disciplines, programs } from "@/content/trainings";
-import { heroPhotos } from "@/content/gallery";
+import { heroPhotos, disciplinePhotos, featuredPhotos } from "@/content/gallery";
 import { disciplineIcon } from "@/components/Icons";
 import { ButtonLink, Eyebrow, PhotoSlot, Section, SectionTitle, ArrowIcon } from "@/components/ui";
 import { whatsappLink } from "@/lib/whatsapp";
@@ -120,7 +120,7 @@ export default async function Home() {
                 href={`/entrenamientos#${d.id}`}
                 className="reveal group relative flex flex-col overflow-hidden rounded-sm border border-white/10 bg-petrol-950 transition hover:border-sport/60"
               >
-                <PhotoSlot src={heroPhotos[d.id]} alt={d.name} discipline={d.id} label={d.name} className="aspect-[4/3]" />
+                <PhotoSlot src={disciplinePhotos[d.id].src} position={disciplinePhotos[d.id].position} alt={`${d.name} – Tritotal Team`} discipline={d.id} label={d.name} className="aspect-[4/3] transition duration-500 group-hover:scale-[1.03]" />
                 <div className="flex flex-1 flex-col p-6">
                   <div className="flex items-center gap-3">
                     <Icon className="h-8 w-8 text-sport" />
@@ -181,6 +181,23 @@ export default async function Home() {
           <ButtonLink href="/planes" variant="ghost">Ver planes <ArrowIcon className="h-5 w-5" /></ButtonLink>
         </div>
       </Section>
+
+      {/* EN COMPETENCIA */}
+      <section className="bg-petrol-950 py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionTitle eyebrow="En competencia" title={<>Entrenamos para <span className="text-sport">este momento</span></>} />
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:grid-rows-2">
+            {featuredPhotos.map((src, i) => (
+              <div key={src} className={`reveal relative overflow-hidden ${i === 0 ? "col-span-2 row-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
+                <PhotoSlot src={src} alt="Deportista de Tritotal Team en competencia" className="h-full w-full transition duration-700 hover:scale-105" sizes={i === 0 ? "(min-width:768px) 50vw, 100vw" : "(min-width:768px) 25vw, 50vw"} position="center 30%" />
+              </div>
+            ))}
+          </div>
+          <div className="mt-8">
+            <ButtonLink href="/galeria" variant="outline">Ver galería <ArrowIcon className="h-5 w-5" /></ButtonLink>
+          </div>
+        </div>
+      </section>
 
       {/* CTA FINAL */}
       <section className="relative overflow-hidden bg-sport text-ink">

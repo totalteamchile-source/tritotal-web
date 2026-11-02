@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { disciplines, programs } from "@/content/trainings";
-import { heroPhotos } from "@/content/gallery";
+import { disciplinePhotos } from "@/content/gallery";
 import { getSchedule } from "@/lib/data";
 import { disciplineIcon } from "@/components/Icons";
 import { ButtonLink, PageHero, Pending, PhotoSlot, Section, SectionTitle } from "@/components/ui";
@@ -25,7 +25,7 @@ export default async function EntrenamientosPage() {
         return (
           <Section key={d.id} id={d.id} className={i % 2 ? "bg-petrol-950" : ""}>
             <div className={`grid items-center gap-10 lg:grid-cols-2 lg:gap-16 ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
-              <PhotoSlot src={heroPhotos[d.id]} alt={d.name} discipline={d.id} label={d.name} className="aspect-[4/3] rounded-sm" />
+              <PhotoSlot src={disciplinePhotos[d.id].src} position={disciplinePhotos[d.id].position} alt={`${d.name} – Tritotal Team`} discipline={d.id} label={d.name} className="aspect-[4/3] rounded-sm" />
               <div>
                 <Icon className="mb-4 h-12 w-12 text-sport" />
                 <h2 className="font-display text-5xl font-extrabold uppercase sm:text-6xl">{d.name}</h2>

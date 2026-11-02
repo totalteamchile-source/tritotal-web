@@ -119,7 +119,7 @@ export const getGallery = () =>
         db.from("noticias").select("*").eq("publicado", true).order("fecha", { ascending: false }).limit(30),
       ]);
       return {
-        photos: must(f).map((p) => ({ src: p.url as string, alt: p.alt as string, category: p.categoria as GalleryCategory })),
+        photos: [...must(f).map((p) => ({ src: p.url as string, alt: p.alt as string, category: p.categoria as GalleryCategory })), ...localPhotos],
         videos: must(v).map((x) => ({ title: x.titulo as string, youtubeId: x.youtube_id as string })),
         news: must(n).map((x) => ({
           date: new Date(x.fecha + "T12:00:00").toLocaleDateString("es-CL", { day: "numeric", month: "long", year: "numeric" }),
