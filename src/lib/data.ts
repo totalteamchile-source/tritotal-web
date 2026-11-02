@@ -101,7 +101,9 @@ export async function getAbout() {
       philosophy: c.filosofia ?? localAbout.philosophy,
       community: c.comunidad ?? localAbout.community,
       values: must(valores).length ? must(valores).map((v) => ({ name: v.nombre, text: v.texto })) : localAbout.values,
-      coaches: must(entrenadores).map((e) => ({ name: e.nombre, role: e.cargo, bio: e.bio ?? undefined, photo: e.foto_url ?? undefined })),
+      coaches: must(entrenadores).length
+        ? must(entrenadores).map((e) => ({ name: e.nombre, role: e.cargo, credentials: e.formacion ?? undefined, bio: e.bio ?? undefined, photo: e.foto_url ?? undefined }))
+        : localAbout.coaches,
     };
   }, fallback);
 }

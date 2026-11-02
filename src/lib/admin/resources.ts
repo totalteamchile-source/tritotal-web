@@ -262,7 +262,8 @@ export const resources: Resource[] = [
     fields: [
       { name: "nombre", label: "Nombre", type: "text", required: true },
       { name: "cargo", label: "Cargo", type: "text", required: true },
-      { name: "bio", label: "Presentación", type: "textarea", wide: true },
+      { name: "formacion", label: "Formación académica", type: "list", help: "Un título por línea.", wide: true },
+      { name: "bio", label: "Perfil profesional", type: "textarea", wide: true },
       { name: "foto_url", label: "Foto", type: "image" },
       { name: "orden", label: "Orden", type: "number", help: "Menor número aparece primero.", default: 0 },
       { name: "activo", label: "Visible en el sitio", type: "checkbox" },

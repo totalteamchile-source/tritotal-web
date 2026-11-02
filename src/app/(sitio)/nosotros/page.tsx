@@ -67,14 +67,29 @@ export default async function NosotrosPage() {
       <Section className="bg-petrol-950">
         <SectionTitle eyebrow="Equipo técnico" title="Entrenadores" />
         {about.coaches.length ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8">
             {about.coaches.map((c) => (
-              <article key={c.name} className="overflow-hidden rounded-sm border border-white/10 bg-ink">
-                <PhotoSlot src={c.photo} alt={c.name} label="Foto" className="aspect-square" />
-                <div className="p-6">
-                  <h3 className="font-display text-2xl font-bold uppercase">{c.name}</h3>
-                  <p className="text-sm uppercase tracking-widest text-sport">{c.role}</p>
-                  {c.bio && <p className="mt-3 text-mist">{c.bio}</p>}
+              <article key={c.name} className="grid overflow-hidden rounded-sm border border-white/10 bg-ink md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+                <PhotoSlot src={c.photo} alt={c.name} label="Foto del entrenador" className="aspect-[4/5] md:aspect-auto md:min-h-full" />
+                <div className="p-6 sm:p-10">
+                  <h3 className="font-display text-3xl font-bold uppercase sm:text-4xl">{c.name}</h3>
+                  <p className="mt-1 text-sm uppercase tracking-widest text-sport">{c.role}</p>
+                  {c.credentials?.length ? (
+                    <div className="mt-6">
+                      <p className="font-display text-sm font-bold uppercase tracking-[0.2em] text-white/60">Formación académica</p>
+                      <ul className="mt-3 space-y-2">
+                        {c.credentials.map((t: string) => (
+                          <li key={t} className="flex gap-3 text-white"><span className="mt-2.5 h-0.5 w-3 shrink-0 bg-sport" aria-hidden />{t}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                  {c.bio && (
+                    <div className="mt-6">
+                      <p className="font-display text-sm font-bold uppercase tracking-[0.2em] text-white/60">Perfil profesional</p>
+                      <p className="mt-3 whitespace-pre-line leading-relaxed text-mist">{c.bio}</p>
+                    </div>
+                  )}
                 </div>
               </article>
             ))}

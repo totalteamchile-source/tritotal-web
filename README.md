@@ -127,3 +127,8 @@ Página `/competencias`, con pestañas **Triatlón** y **Running**. Trae cargado
 con fecha, lugar, distancias y enlace oficial de cada carrera. Las carreras pasadas se mueven solas a «Competencias anteriores».
 Con la base de datos activa se edita en el panel → **Competencias** (campos «Tipo», «Fecha de término» y «Enlace oficial»).
 Requiere `supabase/migrations/0005_calendario_competencias.sql`, que agrega esos campos y carga el calendario sin duplicar.
+
+## Entrenadores
+
+La ficha del fundador viene precargada en `src/content/about.ts`. Con la base de datos activa se administra en el panel → **Entrenadores**
+(campos «Formación académica», un título por línea, y «Perfil profesional»). Requiere `supabase/migrations/0006_entrenadores_formacion.sql`.

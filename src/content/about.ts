@@ -28,9 +28,21 @@ Hoy seguimos creciendo con la misma convicción que nos dio origen: formar perso
 Somos Tritotal Team. Somos Maipú. Somos una familia unida por el deporte, la disciplina y las ganas de superar nuestros propios límites.` as string | null,
   /** Cierre de la página. */
   closing: { title: "Una familia. Tres disciplinas. Infinitas metas.", text: "Desde Maipú, desde 2017, compartiendo la pasión por el triatlón." },
-  coaches: [] as {
+  coaches: [
+    {
+      name: "Iván Andrés Arraño Peña",
+      role: "Fundador y entrenador de triatlón",
+      credentials: ["Profesor de Educación Física.", "Magíster en Alto Rendimiento Deportivo – Universidad Mayor."],
+      bio: `Iván Andrés Arraño Peña es profesor de Educación Física, entrenador de triatlón y Magíster en Alto Rendimiento Deportivo de la Universidad Mayor.
+
+Fundador de Tritotal Team, equipo de triatlón de la comuna de Maipú, creado en 2017. Cuenta con experiencia en la planificación, dirección y desarrollo de procesos de entrenamiento, habiendo preparado a más de 50 deportistas.
+
+Su trabajo se enfoca en la formación deportiva, el desarrollo del rendimiento físico y la preparación de triatletas para competencias de distintas distancias, incluyendo Ironman 70.3 y Full Ironman.`,
+    },
+  ] as {
     name: string;
     role: string;
+    credentials?: string[]; // formación académica
     bio?: string;
     photo?: string; // ruta en /public/fotos/
   }[],
