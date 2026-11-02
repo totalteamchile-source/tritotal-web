@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getAbout } from "@/lib/data";
+import { aboutPhotos } from "@/content/gallery";
 import { PageHero, Pending, PhotoSlot, Section, SectionTitle, ButtonLink } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -34,7 +35,7 @@ export default async function NosotrosPage() {
             <SectionTitle eyebrow="Historia" title="Nuestra historia" />
             {about.history ? <p className="whitespace-pre-line text-lg leading-relaxed text-mist">{about.history}</p> : <Pending hint={HINT} />}
           </div>
-          <PhotoSlot alt="Equipo Tritotal Team" label="Foto del equipo" className="aspect-[4/3] rounded-sm" />
+          <PhotoSlot src={aboutPhotos.historia} alt="Deportistas de Tritotal Team con sus medallas" label="Foto del equipo" className="aspect-[4/3] rounded-sm" position="center 40%" />
         </div>
       </Section>
 
@@ -89,7 +90,7 @@ export default async function NosotrosPage() {
             {about.community ? <p className="text-lg leading-relaxed text-mist">{about.community}</p> : <Pending hint={HINT} />}
             <div className="mt-8"><ButtonLink href="/inscripcion">Únete a Tritotal Team</ButtonLink></div>
           </div>
-          <PhotoSlot alt="Comunidad Tritotal Team" label="Foto de la comunidad" className="aspect-video rounded-sm" />
+          <PhotoSlot src={aboutPhotos.comunidad} alt="Deportistas de Tritotal Team celebrando" label="Foto de la comunidad" className="aspect-video rounded-sm" position="center 30%" />
         </div>
       </Section>
     </>
