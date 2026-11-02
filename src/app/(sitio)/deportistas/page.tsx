@@ -16,23 +16,40 @@ export default async function DeportistasPage() {
       <PageHero eyebrow="Nuestros deportistas" title={<>La fuerza del <span className="text-sport">equipo</span></>} intro="Personas que entrenan, compiten y se superan cada temporada con Tritotal Team." />
       <Section>
         {athletes.length ? (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8">
             {athletes.map((a) => (
-              <article key={a.id} className="reveal group overflow-hidden rounded-sm border border-white/10 bg-petrol-950 transition hover:border-sport/60">
-                <div className="relative">
-                  <PhotoSlot src={a.foto_url} alt={a.nombre} label="Foto pendiente" className="aspect-[4/5]" sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink via-ink/70 to-transparent p-5 pt-16">
-                    <h2 className="font-display text-3xl font-extrabold uppercase leading-none">{a.nombre}</h2>
-                    {a.especialidad && <p className="mt-1 text-sm font-semibold uppercase tracking-widest text-sport">{a.especialidad}</p>}
-                  </div>
+              <article key={a.id} className="reveal grid overflow-hidden rounded-sm border border-white/10 bg-petrol-950 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+                <PhotoSlot src={a.foto_url} alt={a.nombre} label="Foto pendiente" className="aspect-[4/5] md:aspect-auto md:min-h-[560px]" sizes="(min-width:768px) 40vw, 100vw" />
+                <div className="p-6 sm:p-10">
+                  {a.desde ? <p className="inline-block rounded-sm bg-sport px-3 py-1 font-display text-xs font-bold uppercase tracking-widest text-ink">Integrante desde {a.desde}</p> : null}
+                  <h2 className="mt-4 font-display text-4xl font-extrabold uppercase leading-none sm:text-5xl">{a.nombre}</h2>
+                  {a.especialidad && <p className="mt-2 text-sm font-semibold uppercase tracking-widest text-sport">{a.especialidad}</p>}
+
+                  {a.historia && (
+                    <div className="mt-8">
+                      <h3 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-white/60">Historia deportiva</h3>
+                      <p className="mt-3 whitespace-pre-line leading-relaxed text-mist">{a.historia}</p>
+                    </div>
+                  )}
+
+                  {a.logros?.length > 0 && (
+                    <div className="mt-8">
+                      <h3 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-white/60">Trayectoria competitiva</h3>
+                      <ul className="mt-3 space-y-2">
+                        {a.logros.map((l) => (
+                          <li key={l} className="flex gap-3 text-white"><span className="mt-2.5 h-0.5 w-3 shrink-0 bg-sport" aria-hidden />{l}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {a.distancia && (
+                    <div className="mt-8 border-l-2 border-sport bg-ink/60 p-4">
+                      <p className="font-display text-xs font-bold uppercase tracking-[0.2em] text-white/60">Distancia de especialización</p>
+                      <p className="mt-1 font-display text-xl font-bold">{a.distancia}</p>
+                    </div>
+                  )}
                 </div>
-                {a.logros?.length > 0 && (
-                  <ul className="space-y-2 p-5 text-sm">
-                    {a.logros.map((l) => (
-                      <li key={l} className="flex gap-2"><span className="mt-2 h-1 w-3 shrink-0 bg-sport" />{l}</li>
-                    ))}
-                  </ul>
-                )}
               </article>
             ))}
           </div>

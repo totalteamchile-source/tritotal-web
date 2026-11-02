@@ -106,7 +106,8 @@ y redirige a **Mercado Pago Checkout Pro**. El sitio nunca recibe datos de tarje
 
 Página `/deportistas`. Se muestra un deportista cuando en el panel se marca **«Mostrar en Nuestros deportistas»**
 (requiere su autorización). Solo se publican foto, nombre, especialidad y logros; nunca datos de contacto.
-Requiere `supabase/migrations/0004_deportistas_publicos.sql`.
+Requiere `supabase/migrations/0004_deportistas_publicos.sql` y `0007_deportistas_historia.sql` (año de ingreso, historia y distancia).
+Mientras la base no tenga deportistas públicos se muestran los de `src/content/athletes.ts`.
 
 La frase y el subtítulo de la portada se editan en el panel → **Textos del sitio**.
 

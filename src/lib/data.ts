@@ -5,6 +5,7 @@ import type { Producto } from "@/lib/shop";
 import { plans as localPlans, type Plan } from "@/content/plans";
 import { weeklySchedule, competitions as localComps, results as localResults, type ScheduleItem, type Competition, type Result } from "@/content/events";
 import { about as localAbout } from "@/content/about";
+import { athletes as localAthletes } from "@/content/athletes";
 import { photos as localPhotos, videos as localVideos, news as localNews, type GalleryCategory } from "@/content/gallery";
 
 /**
@@ -145,22 +146,33 @@ export const getProduct = (id: string) =>
     ? fromDb<Producto | null>(async (db) => must(await db.from("productos").select(PRODUCT_COLS).eq("id", id).eq("activo", true).maybeSingle()) as Producto | null, null)
     : Promise.resolve(null);
 
-export type DeportistaPublico = { id: string; nombre: string; especialidad: string | null; logros: string[]; foto_url: string | null };
+export type DeportistaPublico = {
+  id: string;
+  nombre: string;
+  especialidad: string | null;
+  logros: string[];
+  foto_url: string | null;
+  desde?: number | null; // año de ingreso al equipo
+  historia?: string | null;
+  distancia?: string | null; // distancia de especialización
+};
 
 /** Solo deportistas marcados como públicos, y solo campos públicos (nunca contacto). */
 export const getPublicAthletes = () =>
   fromDb<DeportistaPublico[]>(
-    async (db) =>
-      must(
+    async (db) => {
+      const rows = must(
         await db
           .from("deportistas")
-          .select("id,nombre,especialidad,logros,foto_url")
+          .select("id,nombre,especialidad,logros,foto_url,desde,historia,distancia")
           .eq("publico", true)
           .eq("estado", "activo")
           .order("orden_publico")
           .order("nombre"),
-      ) as DeportistaPublico[],
-    [],
+      ) as DeportistaPublico[];
+      return rows.length ? rows : localAthletes;
+    },
+    localAthletes,
   );
 
 export async function getHero() {
