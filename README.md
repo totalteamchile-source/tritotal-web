@@ -31,7 +31,7 @@ Todo campo en `null` o lista vacía se muestra en el sitio como **"pendiente"**;
 2. En `src/config/site.ts → logos`, indicar `src`, `width` y `height` reales del archivo. El componente respeta la proporción original.
 
 ### Dominio
-Definir `NEXT_PUBLIC_SITE_URL` (ej. en Vercel) para SEO, sitemap y Open Graph.
+Dominio oficial: **https://www.tritotalteam.cl** (registrado en NIC Chile con DNS `ns1/ns2.vercel-dns.com`; `tritotalteam.cl` redirige a `www`). Se puede sobrescribir con `NEXT_PUBLIC_SITE_URL`.
 
 ## Identidad visual
 - Fondo: negro `#05090b` y azul petróleo `#061519` → `#16444f`
