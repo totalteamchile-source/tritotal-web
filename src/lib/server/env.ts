@@ -10,7 +10,7 @@ export const env = {
   supabaseServiceKey: process.env.SUPABASE_SERVICE_ROLE_KEY || "",
   resendApiKey: process.env.RESEND_API_KEY || "",
   mailFrom: process.env.MAIL_FROM || "",
-  adminEmail: process.env.ADMIN_EMAIL || "",
+  adminEmail: process.env.ADMIN_EMAIL || "totalteamchile@gmail.com",
 };
 
 export const isDbConfigured = () => Boolean(env.supabaseUrl && env.supabaseServiceKey);
