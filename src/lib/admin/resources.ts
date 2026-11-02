@@ -222,8 +222,10 @@ export const resources: Resource[] = [
     fields: [
       { name: "nombre", label: "Nombre", type: "text", required: true },
       { name: "fecha", label: "Fecha", type: "date", required: true },
+      { name: "fecha_fin", label: "Fecha de término (si dura más de un día)", type: "date" },
       { name: "lugar", label: "Lugar", type: "text", required: true },
       { name: "distancia", label: "Distancia", type: "text", placeholder: "Ej: 70.3" },
+      { name: "enlace", label: "Enlace oficial o de inscripción", type: "text", placeholder: "https://…" },
       { name: "descripcion", label: "Descripción", type: "textarea", wide: true },
     ],
     columns: ["fecha", "nombre", "lugar", "distancia"],
