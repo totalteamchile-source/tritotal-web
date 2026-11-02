@@ -1,6 +1,7 @@
 import "server-only";
 import { supabaseAdmin } from "@/lib/server/supabase";
 import { site } from "@/config/site";
+import type { Producto } from "@/lib/shop";
 import { plans as localPlans, type Plan } from "@/content/plans";
 import { weeklySchedule, competitions as localComps, results as localResults, type ScheduleItem, type Competition, type Result } from "@/content/events";
 import { about as localAbout } from "@/content/about";
@@ -130,3 +131,13 @@ export const getGallery = () =>
     },
     { photos: localPhotos, videos: localVideos, news: localNews as { date: string; title: string; summary: string; image?: string }[] },
   );
+
+const PRODUCT_COLS = "id,nombre,descripcion,categoria,precio,imagen_url,variantes";
+
+export const getProducts = () =>
+  fromDb<Producto[]>(async (db) => must(await db.from("productos").select(PRODUCT_COLS).eq("activo", true).order("orden").order("creado_en")) as Producto[], []);
+
+export const getProduct = (id: string) =>
+  /^[0-9a-f-]{36}$/.test(id)
+    ? fromDb<Producto | null>(async (db) => must(await db.from("productos").select(PRODUCT_COLS).eq("id", id).eq("activo", true).maybeSingle()) as Producto | null, null)
+    : Promise.resolve(null);

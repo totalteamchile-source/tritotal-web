@@ -43,5 +43,6 @@ export const nav = [
   { href: "/planes", label: "Planes" },
   { href: "/competencias", label: "Competencias" },
   { href: "/galeria", label: "Galería" },
+  { href: "/tienda", label: "Tienda" },
   { href: "/contacto", label: "Contacto" },
 ];

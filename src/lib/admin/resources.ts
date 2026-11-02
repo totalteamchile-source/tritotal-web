@@ -14,7 +14,9 @@ export type FieldType =
   | "list" // una línea por elemento (text[])
   | "checkbox"
   | "image"
-  | "relation";
+  | "relation"
+  | "variants" // tallas con stock (jsonb)
+  | "items"; // detalle de productos de un pedido (solo lectura)
 
 export type Field = {
   name: string;
@@ -126,6 +128,63 @@ export const resources: Resource[] = [
     columns: ["nombre", "modalidad", "precio", "activo"],
     orderBy: [{ column: "orden", ascending: true }],
     revalidate: ["/planes", "/inscripcion"],
+  },
+  {
+    slug: "pedidos",
+    table: "pedidos",
+    title: "Pedidos tienda",
+    singular: "pedido",
+    roles: ["admin"],
+    canCreate: false,
+    description: "Compras hechas en la tienda del sitio.",
+    fields: [
+      { name: "estado", label: "Estado", type: "select", options: ["pendiente_pago", "pagado", "preparando", "entregado", "cancelado", "rechazado"], required: true },
+      { name: "notas_admin", label: "Notas internas", type: "textarea", wide: true },
+      { name: "numero", label: "N° de pedido", type: "text", readonly: true },
+      { name: "creado_en", label: "Fecha", type: "text", readonly: true },
+      { name: "items", label: "Productos", type: "items", readonly: true, wide: true },
+      { name: "total", label: "Total (CLP)", type: "number", readonly: true },
+      { name: "nombre", label: "Cliente", type: "text", readonly: true },
+      { name: "email", label: "Correo", type: "text", readonly: true },
+      { name: "telefono", label: "Teléfono", type: "text", readonly: true },
+      { name: "entrega", label: "Entrega", type: "text", readonly: true },
+      { name: "direccion", label: "Dirección", type: "text", readonly: true },
+      { name: "comuna", label: "Comuna", type: "text", readonly: true },
+      { name: "notas", label: "Comentarios del cliente", type: "textarea", readonly: true, wide: true },
+      { name: "proveedor", label: "Medio de pago", type: "text", readonly: true },
+      { name: "pago_id", label: "ID de pago Mercado Pago", type: "text", readonly: true },
+      { name: "pago_estado", label: "Estado en Mercado Pago", type: "text", readonly: true },
+    ],
+    columns: ["creado_en", "numero", "nombre", "total", "estado"],
+    orderBy: [{ column: "creado_en", ascending: false }],
+    revalidate: [],
+  },
+  {
+    slug: "productos",
+    table: "productos",
+    title: "Productos tienda",
+    singular: "producto",
+    roles: ["admin"],
+    fields: [
+      { name: "nombre", label: "Nombre", type: "text", required: true },
+      { name: "categoria", label: "Categoría", type: "text", required: true, placeholder: "Ej: Poleras, Gorros, Accesorios" },
+      { name: "precio", label: "Precio (CLP)", type: "number", required: true },
+      { name: "orden", label: "Orden", type: "number", help: "Menor número aparece primero.", default: 0 },
+      { name: "descripcion", label: "Descripción", type: "textarea", wide: true },
+      { name: "imagen_url", label: "Foto", type: "image" },
+      {
+        name: "variantes",
+        label: "Tallas y stock",
+        type: "variants",
+        required: true,
+        wide: true,
+        help: "Una talla por línea con su stock, ej. «M: 5». Sin número = sin control de stock. Para productos sin talla, escribe «Única».",
+      },
+      { name: "activo", label: "Visible en la tienda", type: "checkbox" },
+    ],
+    columns: ["imagen_url", "nombre", "precio", "variantes", "activo"],
+    orderBy: [{ column: "orden", ascending: true }],
+    revalidate: ["/tienda"],
   },
   {
     slug: "horarios",

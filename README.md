@@ -84,10 +84,29 @@ configurado, el sitio usa como respaldo los archivos de `src/content`.
 
 Las imágenes se suben al bucket público `medios` de Supabase Storage (máx. 4 MB por imagen).
 
+## Tienda (Etapa 4)
+
+`/tienda` muestra los productos activos; cada uno tiene tallas con stock. El carrito se guarda en el navegador.
+Al pagar, `POST /api/pedidos` vuelve a calcular precios y stock **desde la base de datos**, crea el pedido
+y redirige a **Mercado Pago Checkout Pro**. El sitio nunca recibe datos de tarjetas.
+
+- Aviso de pago: `POST /api/pagos/mercadopago` (webhook). El pago se consulta a la API de Mercado Pago antes de
+  marcar el pedido como pagado; se valida el monto y el stock se descuenta una sola vez.
+- Al volver de Mercado Pago, `/tienda/pedido/[id]` también consulta el pago por si el aviso aún no llegó.
+- Sin `MERCADOPAGO_ACCESS_TOKEN`, los pedidos se registran igual y el pago se coordina por WhatsApp.
+
+### Activar Mercado Pago
+1. Ejecutar `supabase/migrations/0003_tienda.sql` en Supabase.
+2. En https://www.mercadopago.cl/developers/panel crear una aplicación (Checkout Pro) y copiar el
+   **Access Token de producción** a `MERCADOPAGO_ACCESS_TOKEN` en Vercel.
+3. En la aplicación → **Webhooks**: URL `https://www.tritotalteam.cl/api/pagos/mercadopago`, evento **Pagos**.
+   Copiar la clave secreta a `MERCADOPAGO_WEBHOOK_SECRET`. Hacer **Redeploy**.
+
 ## Etapas
 - [x] Etapa 1 – Diseño: identidad, portada, menú, versión móvil
 - [x] Etapa 2 – Páginas: Inicio, Nosotros, Entrenamientos, Planes, Competencias/Resultados, Galería, Contacto
 - [x] Etapa 3 – Inscripciones: formulario, registro en Supabase, folio de confirmación, aviso al administrador por correo y WhatsApp
-- [ ] Etapa 4 – Pagos (Webpay / Mercado Pago) y mensualidades
+- [x] Etapa 4a – Tienda con carrito y pago con Mercado Pago
+- [ ] Etapa 4b – Cobro de mensualidades e historial de pagos de deportistas
 - [x] Etapa 5 – Panel de administración (pagos se integran en la Etapa 4)
 - [ ] Etapa 6 – Pruebas y publicación

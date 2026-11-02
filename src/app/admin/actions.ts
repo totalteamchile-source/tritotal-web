@@ -7,6 +7,7 @@ import { getResource, contentKeys, type Field } from "@/lib/admin/resources";
 import { requireRol, supabaseAuth } from "@/lib/server/auth";
 import { supabaseAdmin } from "@/lib/server/supabase";
 import { isAuthConfigured } from "@/lib/server/env";
+import { parseVariantes } from "@/lib/shop";
 
 export type FormState = { error?: string; ok?: string } | undefined;
 
@@ -51,6 +52,10 @@ async function readField(f: Field, fd: FormData): Promise<unknown> {
       return fd.getAll(f.name).map(String);
     case "list":
       return str.split("\n").map((s) => s.trim()).filter(Boolean);
+    case "variants": {
+      const v = parseVariantes(str);
+      return v.length ? v : null;
+    }
     case "image": {
       const file = fd.get(`${f.name}__file`);
       if (fd.get(`${f.name}__remove`) === "on") return null;
@@ -89,6 +94,7 @@ export async function saveRecord(slug: string, id: string | null, _prev: FormSta
   if (error) return { error: "No se pudo guardar: " + error.message };
 
   res.revalidate.forEach((p) => revalidatePath(p));
+  if (slug === "productos") revalidatePath("/tienda/[id]", "page");
   revalidatePath(`/admin/${slug}`);
   revalidatePath("/admin");
   redirect(`/admin/${slug}?ok=1`);

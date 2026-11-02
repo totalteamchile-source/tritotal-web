@@ -11,9 +11,12 @@ export const env = {
   supabaseAnonKey: process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "",
   resendApiKey: process.env.RESEND_API_KEY || "",
   mailFrom: process.env.MAIL_FROM || "",
+  mpAccessToken: process.env.MERCADOPAGO_ACCESS_TOKEN || "",
+  mpWebhookSecret: process.env.MERCADOPAGO_WEBHOOK_SECRET || "",
   adminEmail: process.env.ADMIN_EMAIL || "totalteamchile@gmail.com",
 };
 
 export const isDbConfigured = () => Boolean(env.supabaseUrl && env.supabaseServiceKey);
 export const isMailConfigured = () => Boolean(env.resendApiKey && env.mailFrom);
 export const isAuthConfigured = () => Boolean(env.supabaseUrl && env.supabaseAnonKey && env.supabaseServiceKey);
+export const isMpConfigured = () => Boolean(env.mpAccessToken);

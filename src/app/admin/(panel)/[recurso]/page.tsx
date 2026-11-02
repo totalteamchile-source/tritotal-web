@@ -15,10 +15,12 @@ function Cell({ f, v, rel }: { f?: Field; v: unknown; rel: Record<string, { id: 
     // eslint-disable-next-line @next/next/no-img-element
     return <img src={String(v)} alt="" className="h-12 w-12 rounded-sm object-cover" />;
   if (f?.type === "relation") return <>{rel[f.name]?.find((o) => o.id === v)?.label ?? "—"}</>;
-  if (f?.name === "precio") return <>{new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(Number(v))}</>;
+  if (f?.type === "variants" && Array.isArray(v))
+    return <span className="text-xs">{(v as { talla: string; stock: number | null }[]).map((x) => (x.stock === null ? x.talla : `${x.talla}: ${x.stock}`)).join(" · ")}</span>;
+  if (f?.name === "precio" || f?.name === "total") return <>{new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(Number(v))}</>;
   if (f?.type === "date") return <>{new Date(String(v) + "T12:00:00").toLocaleDateString("es-CL")}</>;
   if (f?.name === "estado") {
-    const color: Record<string, string> = { pendiente: "bg-sport text-ink", activo: "bg-emerald-400/20 text-emerald-300", aceptada: "bg-emerald-400/20 text-emerald-300", rechazada: "bg-red-400/20 text-red-300", inactivo: "bg-white/10 text-mist" };
+    const color: Record<string, string> = { pendiente: "bg-sport text-ink", pagado: "bg-sport text-ink", preparando: "bg-yellow-400/20 text-yellow-200", entregado: "bg-emerald-400/20 text-emerald-300", pendiente_pago: "bg-white/10 text-mist", cancelado: "bg-red-400/20 text-red-300", activo: "bg-emerald-400/20 text-emerald-300", aceptada: "bg-emerald-400/20 text-emerald-300", rechazada: "bg-red-400/20 text-red-300", inactivo: "bg-white/10 text-mist" };
     return <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${color[String(v)] ?? "bg-white/10"}`}>{String(v)}</span>;
   }
   return <>{Array.isArray(v) ? v.join(", ") : String(v)}</>;

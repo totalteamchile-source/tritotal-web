@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { Field } from "@/lib/admin/resources";
 import type { FormState } from "@/app/admin/actions";
+import { variantesATexto, type Variante } from "@/lib/shop";
 import { FormMessage, SubmitButton, inputCls, useKeepForm } from "./FormBits";
 
 type Props = {
@@ -26,6 +27,8 @@ function FieldInput({ f, value, relations }: { f: Field; value: unknown; relatio
       return <textarea {...common} rows={5} defaultValue={asString(value)} className={inputCls} />;
     case "list":
       return <textarea {...common} rows={4} defaultValue={asString(value)} className={inputCls} />;
+    case "variants":
+      return <textarea {...common} rows={5} defaultValue={variantesATexto(value as Variante[]) || (value === undefined ? "S: 0\nM: 0\nL: 0\nXL: 0" : "")} className={`${inputCls} font-mono`} />;
     case "number":
       return <input {...common} inputMode="numeric" defaultValue={asString(value)} className={inputCls} />;
     case "date":
@@ -120,7 +123,12 @@ export function ResourceForm({ fields, values, relations, action, cancelHref }: 
             let v = values[f.name];
             if (f.type === "relation") v = relations[f.name]?.find((o) => o.id === v)?.label ?? (v ? "Plan eliminado" : null);
             if (f.name === "creado_en" && v) v = new Date(String(v)).toLocaleString("es-CL");
-            const s = Array.isArray(v) ? v.join(", ") : asString(v);
+            if (f.type === "items" && Array.isArray(v))
+              v = (v as { nombre: string; talla: string; cantidad: number; precio: number }[]).map(
+                (i) => `${i.cantidad} × ${i.nombre} (${i.talla}) — $${(i.precio * i.cantidad).toLocaleString("es-CL")}`,
+              );
+            if (f.name === "total" && typeof v === "number") v = `$${v.toLocaleString("es-CL")}`;
+            const s = Array.isArray(v) ? v.join(f.type === "items" ? "\n" : ", ") : asString(v);
             return (
               <div key={f.name} className={f.wide ? "sm:col-span-2" : ""}>
                 <dt className="text-xs uppercase tracking-wider text-mist/70">{f.label}</dt>
