@@ -94,12 +94,13 @@ export async function getAbout() {
       db.from("entrenadores").select("*").eq("activo", true).order("orden"),
     ]);
     return {
-      history: c.historia ?? null,
-      mission: c.mision ?? null,
-      vision: c.vision ?? null,
-      philosophy: c.filosofia ?? null,
-      community: c.comunidad ?? null,
-      values: must(valores).map((v) => ({ name: v.nombre, text: v.texto })),
+      // Si un texto no se ha editado en el panel, se usa el oficial de src/content/about.ts.
+      history: c.historia ?? localAbout.history,
+      mission: c.mision ?? localAbout.mission,
+      vision: c.vision ?? localAbout.vision,
+      philosophy: c.filosofia ?? localAbout.philosophy,
+      community: c.comunidad ?? localAbout.community,
+      values: must(valores).length ? must(valores).map((v) => ({ name: v.nombre, text: v.texto })) : localAbout.values,
       coaches: must(entrenadores).map((e) => ({ name: e.nombre, role: e.cargo, bio: e.bio ?? undefined, photo: e.foto_url ?? undefined })),
     };
   }, fallback);
