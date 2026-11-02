@@ -9,7 +9,12 @@ export const site = {
   description:
     "Equipo de triatlón y entrenamiento de resistencia: natación, ciclismo y running. Preparación para triatlón, Ironman 70.3 y Full Ironman.",
   // Dominio oficial: definir NEXT_PUBLIC_SITE_URL en el entorno al publicar.
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  // Si no está definido, en Vercel se usa la URL de producción del proyecto.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
   locale: "es_CL",
 
   whatsapp: {
