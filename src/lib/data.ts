@@ -53,7 +53,7 @@ export const getSchedule = () =>
 export const getCompetitions = () =>
   fromDb<Competition[]>(async (db) => {
     const rows = must(await db.from("competencias").select("*").order("fecha"));
-    return rows.map((c) => ({ date: c.fecha, name: c.nombre, place: c.lugar, distance: c.distancia ?? undefined, endDate: c.fecha_fin ?? undefined, url: /^https?:\/\//i.test(c.enlace ?? "") ? c.enlace : undefined }));
+    return rows.map((c) => ({ date: c.fecha, name: c.nombre, place: c.lugar, distance: c.distancia ?? undefined, endDate: c.fecha_fin ?? undefined, type: c.tipo === "Running" ? "Running" : "Triatlón", url: /^https?:\/\//i.test(c.enlace ?? "") ? c.enlace : undefined }));
   }, localComps);
 
 export const getResults = () =>

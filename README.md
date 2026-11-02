@@ -121,8 +121,9 @@ La frase y el subtítulo de la portada se editan en el panel → **Textos del si
 
 ## Calendario de competencias
 
-Página `/competencias`. Trae cargado el calendario de triatlón en Chile tomado de
-[trichile.cl/calendario_nacional](https://www.trichile.cl/calendario_nacional) (consultado el 2 de noviembre de 2026),
+Página `/competencias`, con pestañas **Triatlón** y **Running**. Trae cargado el calendario de triatlón en Chile tomado de
+[trichile.cl/calendario_nacional](https://www.trichile.cl/calendario_nacional) y las carreras de running de Santiago de
+[corre.cl/calendario](https://www.corre.cl/calendario) (ambos consultados el 2 de noviembre de 2026),
 con fecha, lugar, distancias y enlace oficial de cada carrera. Las carreras pasadas se mueven solas a «Competencias anteriores».
-Con la base de datos activa se edita en el panel → **Competencias** (campos «Fecha de término» y «Enlace oficial»).
+Con la base de datos activa se edita en el panel → **Competencias** (campos «Tipo», «Fecha de término» y «Enlace oficial»).
 Requiere `supabase/migrations/0005_calendario_competencias.sql`, que agrega esos campos y carga el calendario sin duplicar.

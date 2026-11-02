@@ -17,16 +17,12 @@ const DEFAULT_SUB = "Entrenamos personas, formamos deportistas y construimos una
  * Frase de portada editable desde el panel. Cada oración va en su línea:
  * la primera en blanco y las siguientes alternan turquesa y contorno.
  */
+const DEFAULT_TITLE = "Nadar, pedalear y correr: tres desafíos, una sola voluntad.";
+/** Cada frase (o lo que va tras «:») va en su propia línea. */
+const splitTitle = (t: string) => t.split(/(?<=[.!?:])\s+/).filter(Boolean);
+
 function HeroTitle({ text }: { text: string | null }) {
-  if (!text)
-    return (
-      <>
-        Supera tus límites.
-        <br />
-        <span className="text-sport">Construye tu</span> <span className="text-outline">mejor versión.</span>
-      </>
-    );
-  const parts = text.split(/(?<=[.!?])\s+/).filter(Boolean);
+  const parts = splitTitle(text || DEFAULT_TITLE);
   const out: ReactNode[] = [];
   parts.forEach((p, i) => {
     const cls = i === 0 ? "" : i % 2 === 1 ? "text-sport" : "text-outline";
@@ -68,7 +64,7 @@ export default async function Home() {
         <div className="hero-in relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-16 pt-28 sm:px-6 lg:justify-center lg:px-8 lg:pb-24">
           <Logo variant="principal" height={110} className="mb-6 !h-[72px] !w-auto sm:mb-8 sm:!h-[110px]" />
           <Eyebrow>Natación · Ciclismo · Running</Eyebrow>
-          <h1 className={`max-w-5xl font-display font-extrabold uppercase leading-[0.86] tracking-tight ${(hero.titulo?.split(/(?<=[.!?])\s+/).length ?? 2) > 2 ? "text-[clamp(2.6rem,7.5vw,6.5rem)]" : "text-[clamp(3rem,10vw,8.5rem)]"}`}>
+          <h1 className={`max-w-5xl font-display font-extrabold uppercase leading-[0.86] tracking-tight ${splitTitle(hero.titulo || DEFAULT_TITLE).length > 2 || (hero.titulo || DEFAULT_TITLE).length > 40 ? "text-[clamp(2.4rem,6.5vw,6rem)]" : "text-[clamp(3rem,10vw,8.5rem)]"}`}>
             <HeroTitle text={hero.titulo} />
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist sm:text-xl">
