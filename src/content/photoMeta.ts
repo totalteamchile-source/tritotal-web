@@ -30,4 +30,8 @@ export const photoMeta: Record<string, { w: number; h: number; focus: string }> 
   "/fotos/valdivia703-ciclismo.webp": { w: 853, h: 1280, focus: "50% 32%" },
   "/fotos/valdivia703-medalla.webp": { w: 959, h: 1280, focus: "45% 32%" },
   "/fotos/valdivia703-meta.webp": { w: 853, h: 1280, focus: "45% 28%" },
+  "/fotos/equipo-piscina.webp": { w: 1280, h: 960, focus: "50% 45%" },
+  "/fotos/maraton-santiago-42k.webp": { w: 900, h: 1600, focus: "45% 25%" },
+  "/fotos/ciclismo-320.webp": { w: 1066, h: 1600, focus: "50% 30%" },
+  "/fotos/running-320.webp": { w: 1000, h: 1488, focus: "55% 15%" },
 };

@@ -15,4 +15,14 @@ export const athletes: DeportistaPublico[] = [
     distancia: "70.3 (1,9 km natación, 90 km ciclismo y 21,1 km running)",
     foto_url: "/fotos/valdivia703-carrera.webp",
   },
+  {
+    id: "maximiliano-aranis",
+    nombre: "Maximiliano Aranis",
+    especialidad: "Triatleta y maratonista – Tritotal Team",
+    historia: `Maximiliano Aranis ya tiene dos triatlones en el cuerpo, ambos en Piedra Roja, y debuta en la media distancia en el Ironman 70.3 de Valdivia.
+
+Además es corredor de varias maratones de Santiago y Viña del Mar.`,
+    logros: ["Triatlón Piedra Roja: 2 participaciones.", "Ironman 70.3 Valdivia: debut en media distancia.", "Maratones de Santiago y Viña del Mar."],
+    foto_url: "/fotos/running-320.webp",
+  },
 ];

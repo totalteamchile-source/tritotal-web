@@ -9,6 +9,10 @@ const train = (src: string, alt: string) => ({ src, alt, category: "Entrenamient
 
 /** Fotos locales (en /public/fotos). Las que se suban desde el panel se muestran primero. */
 export const photos: { src: string; alt: string; category: GalleryCategory }[] = [
+  team("/fotos/equipo-piscina.webp", "Integrantes de Tritotal Team con trajes de neopreno en la piscina"),
+  comp("/fotos/maraton-santiago-42k.webp", "Maximiliano Aranis en el Maratón de Santiago 42K"),
+  comp("/fotos/running-320.webp", "Maximiliano Aranis en el tramo de running de un triatlón"),
+  comp("/fotos/ciclismo-320.webp", "Maximiliano Aranis en el tramo de ciclismo de un triatlón"),
   comp("/fotos/valdivia703-arco.webp", "Llegada bajo el arco del Ironman 70.3 Valdivia"),
   team("/fotos/valdivia703-medalla.webp", "Deportista de Tritotal Team con su medalla del Ironman 70.3 Valdivia"),
   comp("/fotos/valdivia703-meta.webp", "Llegando a la meta del Ironman 70.3 Valdivia"),
@@ -57,4 +61,4 @@ export const disciplinePhotos: Record<"natacion" | "ciclismo" | "running", { src
 export const featuredPhotos = ["/fotos/meta-2.webp", "/fotos/podio-atriaman.webp", "/fotos/ciclismo-4.webp", "/fotos/running-2.webp", "/fotos/natacion-salida.webp"];
 
 /** Fotos de la página Nosotros. */
-export const aboutPhotos = { historia: "/fotos/valdivia703-meta.webp", comunidad: "/fotos/valdivia703-medalla.webp" };
+export const aboutPhotos = { historia: "/fotos/valdivia703-meta.webp", comunidad: "/fotos/equipo-piscina.webp" };

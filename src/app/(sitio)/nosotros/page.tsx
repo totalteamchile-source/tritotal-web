@@ -106,7 +106,7 @@ export default async function NosotrosPage() {
             {about.community ? <p className="whitespace-pre-line text-lg leading-relaxed text-mist">{about.community}</p> : <Pending hint={HINT} />}
             <div className="mt-8"><ButtonLink href="/inscripcion">Únete a Tritotal Team</ButtonLink></div>
           </div>
-          <PhotoSlot src={aboutPhotos.comunidad} alt="Deportista de Tritotal Team con su medalla del Ironman 70.3 Valdivia" label="Foto de la comunidad" className="aspect-[4/5] max-h-[560px] w-full rounded-sm" />
+          <PhotoSlot src={aboutPhotos.comunidad} alt="Integrantes de Tritotal Team con trajes de neopreno en la piscina" label="Foto de la comunidad" className="aspect-[4/3] w-full rounded-sm" />
         </div>
       </Section>
 
