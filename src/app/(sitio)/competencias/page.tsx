@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { competitions, results } from "@/content/events";
+import { getCompetitions, getResults } from "@/lib/data";
 import { PageHero, Pending, Section, SectionTitle, ButtonLink } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -7,10 +7,13 @@ export const metadata: Metadata = {
   description: "Calendario de competencias, participación, resultados y logros de los deportistas de Tritotal Team.",
 };
 
+export const revalidate = 300; // también se refresca al instante al editar en el panel
+
 const fmt = (iso: string) =>
   new Date(iso + "T12:00:00").toLocaleDateString("es-CL", { day: "2-digit", month: "short", year: "numeric" });
 
-export default function CompetenciasPage() {
+export default async function CompetenciasPage() {
+  const [competitions, results] = await Promise.all([getCompetitions(), getResults()]);
   const today = new Date().toISOString().slice(0, 10);
   const upcoming = competitions.filter((c) => c.date >= today).sort((a, b) => a.date.localeCompare(b.date));
   const past = competitions.filter((c) => c.date < today).sort((a, b) => b.date.localeCompare(a.date));

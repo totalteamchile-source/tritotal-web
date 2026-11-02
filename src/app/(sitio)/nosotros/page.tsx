@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { about } from "@/content/about";
+import { getAbout } from "@/lib/data";
 import { PageHero, Pending, PhotoSlot, Section, SectionTitle, ButtonLink } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -7,7 +7,9 @@ export const metadata: Metadata = {
   description: "Historia, misión, visión, filosofía de entrenamiento y equipo técnico de Tritotal Team.",
 };
 
-const HINT = "Editar en src/content/about.ts";
+export const revalidate = 300; // también se refresca al instante al editar en el panel
+
+const HINT = "Se completa desde el panel de administración.";
 
 function Block({ title, value }: { title: string; value: string | null }) {
   return (
@@ -20,7 +22,8 @@ function Block({ title, value }: { title: string; value: string | null }) {
   );
 }
 
-export default function NosotrosPage() {
+export default async function NosotrosPage() {
+  const about = await getAbout();
   return (
     <>
       <PageHero eyebrow="Nosotros" title={<>Somos <span className="text-sport">Tritotal Team</span></>} intro="Un equipo de triatlón y entrenamiento de resistencia: natación, ciclismo y running." />

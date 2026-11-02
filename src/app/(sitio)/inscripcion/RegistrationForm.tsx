@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { plans } from "@/content/plans";
 import { registrationSchema, formDataToObject, fieldErrors, type Registration } from "@/lib/registration";
 import { whatsappLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/Icons";
@@ -27,7 +26,9 @@ function Field({ label, name, error, children, optional }: { label: string; name
   );
 }
 
-function summary(d: Registration, folio?: string) {
+type PlanOpt = { id: string; name: string };
+
+function summary(plans: PlanOpt[], d: Registration, folio?: string) {
   const planName = plans.find((p) => p.id === d.plan)?.name ?? "Por definir";
   return [
     folio
@@ -42,7 +43,7 @@ function summary(d: Registration, folio?: string) {
 
 type Done = { data: Registration; folio?: string; offline?: boolean };
 
-export function RegistrationForm() {
+export function RegistrationForm({ plans }: { plans: PlanOpt[] }) {
   const params = useSearchParams();
   const initialPlan = params.get("plan") ?? "";
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -112,7 +113,7 @@ export function RegistrationForm() {
             : "Guardamos tus datos y el equipo te contactará para coordinar tu ingreso. Si quieres adelantar la conversación, escríbenos por WhatsApp."}
         </p>
         <a
-          href={whatsappLink(summary(done.data, done.folio))}
+          href={whatsappLink(summary(plans, done.data, done.folio))}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-8 inline-flex items-center gap-2 rounded-sm bg-[#25D366] px-6 py-4 font-display font-bold uppercase tracking-wider text-ink hover:bg-[#1fbe5a]"

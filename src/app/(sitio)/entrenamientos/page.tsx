@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { disciplines, programs } from "@/content/trainings";
 import { heroPhotos } from "@/content/gallery";
-import { weeklySchedule } from "@/content/events";
+import { getSchedule } from "@/lib/data";
 import { disciplineIcon } from "@/components/Icons";
 import { ButtonLink, PageHero, Pending, PhotoSlot, Section, SectionTitle } from "@/components/ui";
 
@@ -10,9 +10,12 @@ export const metadata: Metadata = {
   description: "Entrenamiento de natación, ciclismo y running. Preparación para triatlón, Ironman 70.3, Full Ironman y running.",
 };
 
+export const revalidate = 300; // también se refresca al instante al editar en el panel
+
 const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"] as const;
 
-export default function EntrenamientosPage() {
+export default async function EntrenamientosPage() {
+  const weeklySchedule = await getSchedule();
   return (
     <>
       <PageHero eyebrow="Entrenamientos" title={<>Nadar. Pedalear. <span className="text-sport">Correr.</span></>} intro="Entrenamiento estructurado en las tres disciplinas, con preparación específica para tu competencia." />
@@ -76,7 +79,7 @@ export default function EntrenamientosPage() {
             })}
           </div>
         ) : (
-          <Pending label="Horarios por publicar" hint="Se administrarán desde el panel (Etapa 5). Por ahora: src/content/events.ts" />
+          <Pending label="Horarios por publicar" hint="Se publican desde el panel de administración." />
         )}
         <div className="mt-10 flex flex-wrap gap-4">
           <ButtonLink href="/planes">Ver planes</ButtonLink>

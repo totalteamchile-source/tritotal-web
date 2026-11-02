@@ -63,10 +63,31 @@ La tabla tiene RLS activado y sin políticas públicas: solo el servidor puede l
 Crear cuenta en https://resend.com, verificar el dominio y completar `RESEND_API_KEY`, `MAIL_FROM` y `ADMIN_EMAIL`.
 Sin esto, las inscripciones se guardan igual pero no se envían correos.
 
+## Panel de administración (Etapa 5)
+
+Ruta privada `/admin`. Inicio de sesión con Supabase Auth (correo y contraseña).
+
+| Rol | Puede |
+|---|---|
+| **admin** | Todo: inscripciones, deportistas, planes y precios, horarios, competencias, resultados, entrenadores, fotos, videos, noticias, valores, textos del sitio y usuarios del panel |
+| **entrenador** | Deportistas, horarios, competencias, resultados, fotos, videos y noticias |
+
+Lo que se edita en el panel se publica al instante en el sitio. Si una tabla no existe o Supabase no está
+configurado, el sitio usa como respaldo los archivos de `src/content`.
+
+### Activarlo
+1. Ejecutar `supabase/migrations/0002_panel.sql` en **SQL Editor** (después de `0001`).
+2. Agregar en Vercel la variable `SUPABASE_ANON_KEY` (Supabase → Project Settings → API → clave `anon public`) y hacer **Redeploy**.
+3. En Supabase → **Authentication → Users → Add user**, crear el usuario con el correo de `ADMIN_EMAIL`, marcando **Auto Confirm User**. Al ingresar por primera vez recibe rol admin automáticamente.
+4. En Supabase → **Authentication → Sign In / Providers**, desactivar **Allow new users to sign up** (los usuarios se crean solo desde el panel).
+5. Ingresar en `/admin/login`. Los entrenadores se agregan desde **Usuarios del panel**.
+
+Las imágenes se suben al bucket público `medios` de Supabase Storage (máx. 4 MB por imagen).
+
 ## Etapas
 - [x] Etapa 1 – Diseño: identidad, portada, menú, versión móvil
 - [x] Etapa 2 – Páginas: Inicio, Nosotros, Entrenamientos, Planes, Competencias/Resultados, Galería, Contacto
 - [x] Etapa 3 – Inscripciones: formulario, registro en Supabase, folio de confirmación, aviso al administrador por correo y WhatsApp
 - [ ] Etapa 4 – Pagos (Webpay / Mercado Pago) y mensualidades
-- [ ] Etapa 5 – Panel de administración
+- [x] Etapa 5 – Panel de administración (pagos se integran en la Etapa 4)
 - [ ] Etapa 6 – Pruebas y publicación

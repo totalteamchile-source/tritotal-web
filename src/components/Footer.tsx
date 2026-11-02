@@ -2,8 +2,10 @@ import Link from "next/link";
 import { nav, site } from "@/config/site";
 import { whatsappLink } from "@/lib/whatsapp";
 import { Logo } from "./Logo";
+import { getContact } from "@/lib/data";
 
-export function Footer() {
+export async function Footer() {
+  const { instagram, email } = await getContact();
   return (
     <footer className="border-t border-white/10 bg-petrol-950">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-3 lg:px-8">
@@ -34,11 +36,11 @@ export function Footer() {
                 WhatsApp {site.whatsapp.display}
               </a>
             </li>
-            {site.instagram && (
-              <li><a href={site.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">Instagram</a></li>
+            {instagram && (
+              <li><a href={instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">Instagram</a></li>
             )}
-            {site.email && (
-              <li><a href={`mailto:${site.email}`} className="hover:text-white">{site.email}</a></li>
+            {email && (
+              <li><a href={`mailto:${email}`} className="hover:text-white">{email}</a></li>
             )}
           </ul>
         </div>

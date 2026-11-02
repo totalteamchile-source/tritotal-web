@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { billingLabel, formatCLP, plans } from "@/content/plans";
+import { billingLabel, formatCLP } from "@/content/plans";
+import { getPlans } from "@/lib/data";
+import { Pending } from "@/components/ui";
 import { PageHero, Section } from "@/components/ui";
 import { whatsappLink } from "@/lib/whatsapp";
+
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Planes y membresías",
   description: "Planes de entrenamiento de triatlón, natación, ciclismo y running de Tritotal Team.",
 };
 
-export default function PlanesPage() {
+export default async function PlanesPage() {
+  const plans = await getPlans();
   return (
     <>
       <PageHero eyebrow="Planes y membresías" title={<>Elige tu <span className="text-sport">plan</span></>} intro="Planes mensuales, trimestrales y otras modalidades. Los precios se publicarán una vez confirmados." />
       <Section>
+        {!plans.length && <Pending label="Planes por publicar" hint="Se publican desde el panel de administración." />}
         <div className="grid gap-6 lg:grid-cols-3">
           {plans.map((p) => (
             <article

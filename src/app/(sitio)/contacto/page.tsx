@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/config/site";
+import { getContact } from "@/lib/data";
 import { whatsappLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/Icons";
 import { ButtonLink, PageHero, Pending, Section } from "@/components/ui";
@@ -9,7 +10,10 @@ export const metadata: Metadata = {
   description: "Contacta a Tritotal Team por WhatsApp para conocer nuestros planes de entrenamiento.",
 };
 
-export default function ContactoPage() {
+export const revalidate = 300;
+
+export default async function ContactoPage() {
+  const { instagram, email } = await getContact();
   return (
     <>
       <PageHero eyebrow="Contacto" title={<>Hablemos de tu <span className="text-sport">próxima meta</span></>} intro="La forma más rápida de comunicarte con nosotros es por WhatsApp." />
@@ -27,18 +31,18 @@ export default function ContactoPage() {
           <div className="flex flex-col gap-6">
             <div className="rounded-sm border border-white/10 bg-petrol-950 p-6">
               <p className="font-display text-sm font-bold uppercase tracking-widest text-sport">Instagram</p>
-              {site.instagram ? (
-                <a href={site.instagram} target="_blank" rel="noopener noreferrer" className="mt-2 block text-lg hover:text-sport">{site.instagram.replace(/^https?:\/\/(www\.)?/, "")}</a>
+              {instagram ? (
+                <a href={instagram} target="_blank" rel="noopener noreferrer" className="mt-2 block text-lg hover:text-sport">{instagram.replace(/^https?:\/\/(www\.)?/, "")}</a>
               ) : (
-                <div className="mt-3"><Pending label="Por confirmar" hint="src/config/site.ts → instagram" /></div>
+                <div className="mt-3"><Pending label="Por confirmar" hint="Se completa en el panel → Textos del sitio" /></div>
               )}
             </div>
             <div className="rounded-sm border border-white/10 bg-petrol-950 p-6">
               <p className="font-display text-sm font-bold uppercase tracking-widest text-sport">Correo</p>
-              {site.email ? (
-                <a href={`mailto:${site.email}`} className="mt-2 block text-lg hover:text-sport">{site.email}</a>
+              {email ? (
+                <a href={`mailto:${email}`} className="mt-2 block text-lg hover:text-sport">{email}</a>
               ) : (
-                <div className="mt-3"><Pending label="Por confirmar" hint="src/config/site.ts → email" /></div>
+                <div className="mt-3"><Pending label="Por confirmar" hint="Se completa en el panel → Textos del sitio" /></div>
               )}
             </div>
           </div>

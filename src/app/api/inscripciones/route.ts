@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { randomBytes } from "node:crypto";
 import { registrationSchema, fieldErrors } from "@/lib/registration";
-import { plans } from "@/content/plans";
+import { getPlans } from "@/lib/data";
 import { site } from "@/config/site";
 import { env } from "@/lib/server/env";
 import { supabaseAdmin } from "@/lib/server/supabase";
@@ -46,6 +46,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const plans = await getPlans();
   const planId = d.plan && plans.some((p) => p.id === d.plan) ? d.plan : null;
   const folio = newFolio();
   const { error } = await db.from("inscripciones").insert({
