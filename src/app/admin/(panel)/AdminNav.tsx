@@ -15,7 +15,7 @@ export function AdminNav({ items, email, rol }: { items: { href: string; label: 
   return (
     <aside className="border-b border-white/10 bg-ink lg:sticky lg:top-0 lg:h-dvh lg:w-64 lg:shrink-0 lg:border-b-0 lg:border-r">
       <div className="flex h-16 items-center justify-between px-4 lg:h-20 lg:px-6">
-        <Link href="/admin"><Logo variant="secundario" height={28} /></Link>
+        <Link href="/admin"><Logo variant="secundario" height={40} /></Link>
         <button onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-label="Menú" className="rounded-sm border border-white/20 px-3 py-1.5 text-sm lg:hidden">
           {open ? "Cerrar" : "Menú"}
         </button>

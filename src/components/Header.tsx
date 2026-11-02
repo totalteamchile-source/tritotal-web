@@ -33,7 +33,7 @@ export function Header() {
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
         <Link href="/" aria-label="Tritotal Team, inicio" className="shrink-0">
-          <Logo variant="secundario" height={34} />
+          <Logo variant="secundario" height={52} />
         </Link>
 
         <nav aria-label="Principal" className="hidden xl:block">

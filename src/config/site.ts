@@ -31,8 +31,8 @@ export const site = {
    * para que nunca se deformen.
    */
   logos: {
-    principal: { src: "/brand/logo-principal-blanco.png", width: 518, height: 268 } as null | { src: string; width: number; height: number },
-    secundario: { src: "/brand/logo-secundario-blanco.png", width: 1017, height: 304 } as null | { src: string; width: number; height: number },
+    principal: { src: "/brand/logo-color-fondo-oscuro.png", width: 359, height: 250 } as null | { src: string; width: number; height: number },
+    secundario: { src: "/brand/logo-color-fondo-oscuro.png", width: 359, height: 250 } as null | { src: string; width: number; height: number },
   },
 };
 
