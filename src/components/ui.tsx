@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { photoMeta } from "@/content/photoMeta";
 import type { ReactNode } from "react";
 import { ArrowIcon, disciplineIcon } from "./Icons";
 
@@ -143,7 +144,7 @@ export function PhotoSlot({
   return (
     <div className={`relative overflow-hidden bg-petrol-900 ${className}`}>
       {src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" style={position ? { objectPosition: position } : undefined} />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" style={{ objectPosition: position ?? (src ? photoMeta[src]?.focus : undefined) ?? "50% 35%" }} />
       ) : (
         <div className="bg-lanes absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-petrol-800 via-petrol-900 to-ink text-petrol-300">
           {Icon && <Icon className="h-16 w-16 opacity-70" />}

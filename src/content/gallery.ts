@@ -48,9 +48,9 @@ export const heroPhotos: Record<"natacion" | "ciclismo" | "running", string | nu
 
 /** Fotos para las tarjetas y secciones de cada disciplina (formato horizontal). */
 export const disciplinePhotos: Record<"natacion" | "ciclismo" | "running", { src: string; position?: string }> = {
-  natacion: { src: "/fotos/natacion-piscina-1.webp", position: "center 60%" },
+  natacion: { src: "/fotos/natacion-piscina-1.webp" },
   ciclismo: { src: "/fotos/ciclismo-valdivia.webp" },
-  running: { src: "/fotos/running-montana.webp", position: "center 40%" },
+  running: { src: "/fotos/running-montana.webp" },
 };
 
 /** Fotos destacadas en la portada (sección "En competencia"). */

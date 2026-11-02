@@ -36,7 +36,7 @@ export default async function NosotrosPage() {
             <SectionTitle eyebrow="Desde 2017" title="Nuestra historia" />
             {about.history ? <p className="whitespace-pre-line text-lg leading-relaxed text-mist">{about.history}</p> : <Pending hint={HINT} />}
           </div>
-          <PhotoSlot src={aboutPhotos.historia} alt="Deportista de Tritotal Team llegando a la meta del Ironman 70.3 Valdivia" label="Foto del equipo" className="aspect-[4/5] max-h-[560px] w-full rounded-sm" position="center 30%" />
+          <PhotoSlot src={aboutPhotos.historia} alt="Deportista de Tritotal Team llegando a la meta del Ironman 70.3 Valdivia" label="Foto del equipo" className="aspect-[4/5] max-h-[560px] w-full rounded-sm" />
         </div>
       </Section>
 
@@ -106,7 +106,7 @@ export default async function NosotrosPage() {
             {about.community ? <p className="whitespace-pre-line text-lg leading-relaxed text-mist">{about.community}</p> : <Pending hint={HINT} />}
             <div className="mt-8"><ButtonLink href="/inscripcion">Únete a Tritotal Team</ButtonLink></div>
           </div>
-          <PhotoSlot src={aboutPhotos.comunidad} alt="Deportista de Tritotal Team con su medalla del Ironman 70.3 Valdivia" label="Foto de la comunidad" className="aspect-[4/5] max-h-[560px] w-full rounded-sm" position="center 35%" />
+          <PhotoSlot src={aboutPhotos.comunidad} alt="Deportista de Tritotal Team con su medalla del Ironman 70.3 Valdivia" label="Foto de la comunidad" className="aspect-[4/5] max-h-[560px] w-full rounded-sm" />
         </div>
       </Section>
 

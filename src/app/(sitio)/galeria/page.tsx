@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getGallery } from "@/lib/data";
+import { photoMeta } from "@/content/photoMeta";
 import { PageHero, Pending, PhotoSlot, Section, SectionTitle } from "@/components/ui";
 
 export const metadata: Metadata = {
@@ -25,12 +26,23 @@ export default async function GaleriaPage() {
             <div key={cat} className="mb-16 last:mb-0">
               <h2 className="mb-6 font-display text-3xl font-bold uppercase">{cat}</h2>
               {items.length ? (
-                <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
-                  {items.map((p) => (
-                    <div key={p.src} className="relative aspect-square overflow-hidden bg-petrol-900">
-                      <Image src={p.src} alt={p.alt} fill sizes="(min-width:1024px) 25vw, 50vw" className="object-cover transition hover:scale-105" />
-                    </div>
-                  ))}
+                // Fotos completas, sin recortar: cada una conserva su formato (vertical u horizontal).
+                <div className="columns-2 gap-2 md:columns-3">
+                  {items.map((p) => {
+                    const m = photoMeta[p.src];
+                    return (
+                      <div key={p.src} className="mb-2 break-inside-avoid overflow-hidden bg-petrol-900">
+                        <Image
+                          src={p.src}
+                          alt={p.alt}
+                          width={m?.w ?? 1200}
+                          height={m?.h ?? 900}
+                          sizes="(min-width:1024px) 25vw, (min-width:768px) 33vw, 50vw"
+                          className="h-auto w-full transition duration-500 hover:scale-[1.03]"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-2 md:grid-cols-4">

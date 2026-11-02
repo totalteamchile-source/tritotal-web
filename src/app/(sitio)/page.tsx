@@ -45,7 +45,7 @@ export default async function Home() {
       {/* PORTADA */}
       <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-ink">
         {/* Tríptico de disciplinas */}
-        <div className="absolute inset-0 grid grid-cols-3 gap-1 lg:-mx-[6%] lg:-skew-x-6">
+        <div className="absolute inset-0 grid grid-cols-1 gap-1 sm:grid-cols-3 lg:-mx-[6%] lg:-skew-x-6">
           {disciplines.map((d, i) => (
             <PhotoSlot
               key={d.id}
@@ -54,7 +54,7 @@ export default async function Home() {
               discipline={d.id}
               label={d.name}
               priority={i === 0}
-              className="slow-zoom h-full lg:[&>*]:skew-x-6"
+              className={`slow-zoom h-full lg:[&>*]:skew-x-6 ${i < 2 ? "hidden sm:block" : ""}`}
             />
           ))}
         </div>
@@ -185,7 +185,7 @@ export default async function Home() {
           <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:grid-rows-2">
             {featuredPhotos.map((src, i) => (
               <div key={src} className={`reveal relative overflow-hidden ${i === 0 ? "col-span-2 row-span-2 aspect-square md:aspect-auto" : "aspect-square"}`}>
-                <PhotoSlot src={src} alt="Deportista de Tritotal Team en competencia" className="h-full w-full transition duration-700 hover:scale-105" sizes={i === 0 ? "(min-width:768px) 50vw, 100vw" : "(min-width:768px) 25vw, 50vw"} position="center 30%" />
+                <PhotoSlot src={src} alt="Deportista de Tritotal Team en competencia" className="h-full w-full transition duration-700 hover:scale-105" sizes={i === 0 ? "(min-width:768px) 50vw, 100vw" : "(min-width:768px) 25vw, 50vw"} />
               </div>
             ))}
           </div>
