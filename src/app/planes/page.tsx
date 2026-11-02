@@ -59,7 +59,7 @@ export default function PlanesPage() {
               <div className="mt-auto flex flex-col gap-3 pt-8">
                 <Link
                   href={`/inscripcion?plan=${encodeURIComponent(p.id)}`}
-                  className="rounded-sm bg-sport py-3.5 text-center font-display font-bold uppercase tracking-wider hover:bg-sport-600"
+                  className="rounded-sm bg-sport py-3.5 text-ink text-center font-display font-bold uppercase tracking-wider hover:bg-sport-600"
                 >
                   Inscribirme
                 </Link>

@@ -5,6 +5,7 @@ import { disciplineIcon } from "@/components/Icons";
 import { ButtonLink, Eyebrow, PhotoSlot, Section, SectionTitle, ArrowIcon } from "@/components/ui";
 import { whatsappLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/Icons";
+import { Logo } from "@/components/Logo";
 
 const pillars = [
   { n: "01", title: "Disciplina", text: "Cada sesión tiene un propósito dentro de tu planificación." },
@@ -36,6 +37,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/40 to-transparent" />
 
         <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-16 pt-28 sm:px-6 lg:justify-center lg:px-8 lg:pb-24">
+          <Logo variant="principal" height={110} className="mb-6 !h-[72px] !w-auto sm:mb-8 sm:!h-[110px]" />
           <Eyebrow>Natación · Ciclismo · Running</Eyebrow>
           <h1 className="max-w-5xl font-display text-[clamp(3rem,10vw,8.5rem)] font-extrabold uppercase leading-[0.86] tracking-tight">
             Supera tus límites.
@@ -154,7 +156,7 @@ export default function Home() {
       </Section>
 
       {/* CTA FINAL */}
-      <section className="relative overflow-hidden bg-sport">
+      <section className="relative overflow-hidden bg-sport text-ink">
         <div className="bg-lanes absolute inset-0 opacity-60" />
         <div className="relative mx-auto flex max-w-7xl flex-col items-start gap-8 px-4 py-16 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-20">
           <h2 className="max-w-2xl font-display text-4xl font-extrabold uppercase leading-[0.95] sm:text-6xl">

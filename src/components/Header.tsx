@@ -58,7 +58,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Link
             href="/inscripcion"
-            className="hidden rounded-sm bg-sport px-5 py-2.5 font-display text-sm font-bold uppercase tracking-wider text-white transition hover:bg-sport-600 sm:inline-block"
+            className="hidden rounded-sm bg-sport px-5 py-2.5 font-display text-sm font-bold uppercase tracking-wider text-ink transition hover:bg-sport-600 sm:inline-block"
           >
             Únete
           </Link>
@@ -99,7 +99,7 @@ export function Header() {
         </ul>
         <Link
           href="/inscripcion"
-          className="mt-8 block rounded-sm bg-sport py-4 text-center font-display text-lg font-bold uppercase tracking-wider"
+          className="mt-8 block rounded-sm bg-sport py-4 text-ink text-center font-display text-lg font-bold uppercase tracking-wider"
         >
           Únete a Tritotal Team
         </Link>

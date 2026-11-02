@@ -8,7 +8,7 @@ type BtnVariant = "primary" | "outline" | "whatsapp" | "ghost" | "dark" | "outli
 const btnBase =
   "inline-flex items-center justify-center gap-2 rounded-sm px-6 py-3.5 font-display text-base font-bold uppercase tracking-wider transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white";
 const btnVariants: Record<BtnVariant, string> = {
-  primary: "bg-sport text-white hover:bg-sport-600",
+  primary: "bg-sport text-ink hover:bg-sport-600",
   outline: "border border-white/60 text-white hover:bg-white hover:text-ink",
   whatsapp: "bg-[#25D366] text-ink hover:bg-[#1fbe5a]",
   ghost: "text-white hover:text-sport",

@@ -35,7 +35,7 @@ Definir `NEXT_PUBLIC_SITE_URL` (ej. en Vercel) para SEO, sitemap y Open Graph.
 
 ## Identidad visual
 - Fondo: negro `#05090b` y azul petróleo `#061519` → `#16444f`
-- Acento: naranja deportivo `#ff6a13` (sujeto a aprobación)
+- Acento: turquesa / celeste `#2ccfdc`
 - Tipografías: Barlow Condensed (títulos) y Barlow (texto)
 - Tokens en `src/app/globals.css`
 

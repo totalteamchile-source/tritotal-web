@@ -9,8 +9,8 @@
   --color-petrol-700: #16444f;
   --color-petrol-500: #2a7584;
   --color-petrol-300: #7fb7c2;
-  --color-sport: #ff6a13;        /* naranja deportivo (sujeto a aprobación) */
-  --color-sport-600: #e55a0a;
+  --color-sport: #2ccfdc;        /* turquesa / celeste (acento aprobado) */
+  --color-sport-600: #5fe0ea;
   --color-mist: #c9d6d9;         /* texto secundario */
 
   --font-display: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
@@ -28,7 +28,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: var(--color-sport); color: #fff; }
+::selection { background: var(--color-sport); color: var(--color-ink); }
 
 /* Líneas de pista: textura sutil para fondos */
 .bg-lanes {

@@ -25,7 +25,7 @@ export function Logo({
         height={height}
         priority
         className={className}
-        style={{ height, width: "auto" }}
+        style={{ height, width, maxWidth: "100%", objectFit: "contain", objectPosition: "left center" }}
       />
     );
   }

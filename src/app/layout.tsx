@@ -39,7 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es-CL" className={`${barlow.variable} ${barlowCondensed.variable}`}>
       <body>
-        <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-sport focus:px-4 focus:py-2">
+        <a href="#contenido" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:bg-sport focus:text-ink focus:px-4 focus:py-2">
           Saltar al contenido
         </a>
         <Header />

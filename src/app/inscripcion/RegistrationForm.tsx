@@ -145,7 +145,7 @@ export function RegistrationForm() {
             {disciplinesOpts.map((o) => (
               <label key={o} className="cursor-pointer">
                 <input type="checkbox" name="disciplinas" value={o} className="peer sr-only" />
-                <span className="inline-block rounded-full border border-white/20 px-4 py-2 text-sm transition peer-checked:border-sport peer-checked:bg-sport peer-focus-visible:ring-2 peer-focus-visible:ring-white">{o}</span>
+                <span className="inline-block rounded-full border border-white/20 px-4 py-2 text-sm transition peer-checked:border-sport peer-checked:bg-sport peer-checked:text-ink peer-focus-visible:ring-2 peer-focus-visible:ring-white">{o}</span>
               </label>
             ))}
           </div>
@@ -155,7 +155,7 @@ export function RegistrationForm() {
             {competitionsOpts.map((o) => (
               <label key={o} className="cursor-pointer">
                 <input type="checkbox" name="competencias" value={o} className="peer sr-only" />
-                <span className="inline-block rounded-full border border-white/20 px-4 py-2 text-sm transition peer-checked:border-sport peer-checked:bg-sport peer-focus-visible:ring-2 peer-focus-visible:ring-white">{o}</span>
+                <span className="inline-block rounded-full border border-white/20 px-4 py-2 text-sm transition peer-checked:border-sport peer-checked:bg-sport peer-checked:text-ink peer-focus-visible:ring-2 peer-focus-visible:ring-white">{o}</span>
               </label>
             ))}
           </div>
@@ -182,7 +182,7 @@ export function RegistrationForm() {
         {errors.terminos && <p className="mt-1 text-sm text-red-400" role="alert">{errors.terminos}</p>}
       </div>
 
-      <button type="submit" className="rounded-sm bg-sport py-4 font-display text-lg font-bold uppercase tracking-wider transition hover:bg-sport-600 sm:justify-self-start sm:px-12">
+      <button type="submit" className="rounded-sm bg-sport py-4 text-ink font-display text-lg font-bold uppercase tracking-wider transition hover:bg-sport-600 sm:justify-self-start sm:px-12">
         Enviar inscripción
       </button>
     </form>
