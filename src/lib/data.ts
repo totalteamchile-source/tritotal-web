@@ -141,3 +141,26 @@ export const getProduct = (id: string) =>
   /^[0-9a-f-]{36}$/.test(id)
     ? fromDb<Producto | null>(async (db) => must(await db.from("productos").select(PRODUCT_COLS).eq("id", id).eq("activo", true).maybeSingle()) as Producto | null, null)
     : Promise.resolve(null);
+
+export type DeportistaPublico = { id: string; nombre: string; especialidad: string | null; logros: string[]; foto_url: string | null };
+
+/** Solo deportistas marcados como públicos, y solo campos públicos (nunca contacto). */
+export const getPublicAthletes = () =>
+  fromDb<DeportistaPublico[]>(
+    async (db) =>
+      must(
+        await db
+          .from("deportistas")
+          .select("id,nombre,especialidad,logros,foto_url")
+          .eq("publico", true)
+          .eq("estado", "activo")
+          .order("orden_publico")
+          .order("nombre"),
+      ) as DeportistaPublico[],
+    [],
+  );
+
+export async function getHero() {
+  const c = await getContenido();
+  return { titulo: c.hero_titulo || null, subtitulo: c.hero_subtitulo || null };
+}

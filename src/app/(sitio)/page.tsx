@@ -6,6 +6,34 @@ import { ButtonLink, Eyebrow, PhotoSlot, Section, SectionTitle, ArrowIcon } from
 import { whatsappLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/Icons";
 import { Logo } from "@/components/Logo";
+import { getHero } from "@/lib/data";
+import type { ReactNode } from "react";
+
+export const revalidate = 300;
+
+const DEFAULT_SUB = "Entrenamos personas, formamos deportistas y construimos una comunidad apasionada por el triatlón.";
+
+/**
+ * Frase de portada editable desde el panel. Cada oración va en su línea:
+ * la primera en blanco y las siguientes alternan turquesa y contorno.
+ */
+function HeroTitle({ text }: { text: string | null }) {
+  if (!text)
+    return (
+      <>
+        Supera tus límites.
+        <br />
+        <span className="text-sport">Construye tu</span> <span className="text-outline">mejor versión.</span>
+      </>
+    );
+  const parts = text.split(/(?<=[.!?])\s+/).filter(Boolean);
+  const out: ReactNode[] = [];
+  parts.forEach((p, i) => {
+    const cls = i === 0 ? "" : i % 2 === 1 ? "text-sport" : "text-outline";
+    out.push(<span key={i} className={`block ${cls}`}>{p}</span>);
+  });
+  return <>{out}</>;
+}
 
 const pillars = [
   { n: "01", title: "Disciplina", text: "Cada sesión tiene un propósito dentro de tu planificación." },
@@ -14,7 +42,8 @@ const pillars = [
   { n: "04", title: "Competitividad", text: "Preparación específica para llegar a tu carrera en tu mejor forma." },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const hero = await getHero();
   return (
     <>
       {/* PORTADA */}
@@ -29,23 +58,21 @@ export default function Home() {
               discipline={d.id}
               label={d.name}
               priority={i === 0}
-              className="h-full lg:[&>*]:skew-x-6"
+              className="slow-zoom h-full lg:[&>*]:skew-x-6"
             />
           ))}
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/40" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink/90 via-ink/40 to-transparent" />
 
-        <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-16 pt-28 sm:px-6 lg:justify-center lg:px-8 lg:pb-24">
+        <div className="hero-in relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-4 pb-16 pt-28 sm:px-6 lg:justify-center lg:px-8 lg:pb-24">
           <Logo variant="principal" height={110} className="mb-6 !h-[72px] !w-auto sm:mb-8 sm:!h-[110px]" />
           <Eyebrow>Natación · Ciclismo · Running</Eyebrow>
-          <h1 className="max-w-5xl font-display text-[clamp(3rem,10vw,8.5rem)] font-extrabold uppercase leading-[0.86] tracking-tight">
-            Supera tus límites.
-            <br />
-            <span className="text-sport">Construye tu</span> <span className="text-outline">mejor versión.</span>
+          <h1 className={`max-w-5xl font-display font-extrabold uppercase leading-[0.86] tracking-tight ${(hero.titulo?.split(/(?<=[.!?])\s+/).length ?? 2) > 2 ? "text-[clamp(2.6rem,7.5vw,6.5rem)]" : "text-[clamp(3rem,10vw,8.5rem)]"}`}>
+            <HeroTitle text={hero.titulo} />
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-mist sm:text-xl">
-            Entrenamos personas, formamos deportistas y construimos una comunidad apasionada por el triatlón.
+            {hero.subtitulo ?? DEFAULT_SUB}
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <ButtonLink href="/inscripcion">
@@ -91,7 +118,7 @@ export default function Home() {
               <Link
                 key={d.id}
                 href={`/entrenamientos#${d.id}`}
-                className="group relative flex flex-col overflow-hidden rounded-sm border border-white/10 bg-petrol-950 transition hover:border-sport/60"
+                className="reveal group relative flex flex-col overflow-hidden rounded-sm border border-white/10 bg-petrol-950 transition hover:border-sport/60"
               >
                 <PhotoSlot src={heroPhotos[d.id]} alt={d.name} discipline={d.id} label={d.name} className="aspect-[4/3]" />
                 <div className="flex flex-1 flex-col p-6">
@@ -125,7 +152,7 @@ export default function Home() {
           />
           <ol className="divide-y divide-white/10 border-y border-white/10">
             {programs.map((p, i) => (
-              <li key={p.name} className="flex gap-6 py-6">
+              <li key={p.name} className="reveal flex gap-6 py-6">
                 <span className="font-display text-4xl font-extrabold text-petrol-500">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <h3 className="font-display text-2xl font-bold uppercase">{p.name}</h3>
@@ -142,7 +169,7 @@ export default function Home() {
         <SectionTitle eyebrow="Cómo entrenamos" title="Lo que nos mueve" />
         <div className="grid gap-px overflow-hidden rounded-sm bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p) => (
-            <div key={p.n} className="bg-ink p-8">
+            <div key={p.n} className="reveal bg-ink p-8">
               <p className="font-display text-sm font-bold text-sport">{p.n}</p>
               <h3 className="mt-3 font-display text-3xl font-bold uppercase">{p.title}</h3>
               <p className="mt-3 text-mist">{p.text}</p>

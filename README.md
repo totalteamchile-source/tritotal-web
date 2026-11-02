@@ -102,6 +102,14 @@ y redirige a **Mercado Pago Checkout Pro**. El sitio nunca recibe datos de tarje
 3. En la aplicación → **Webhooks**: URL `https://www.tritotalteam.cl/api/pagos/mercadopago`, evento **Pagos**.
    Copiar la clave secreta a `MERCADOPAGO_WEBHOOK_SECRET`. Hacer **Redeploy**.
 
+## Nuestros deportistas
+
+Página `/deportistas`. Se muestra un deportista cuando en el panel se marca **«Mostrar en Nuestros deportistas»**
+(requiere su autorización). Solo se publican foto, nombre, especialidad y logros; nunca datos de contacto.
+Requiere `supabase/migrations/0004_deportistas_publicos.sql`.
+
+La frase y el subtítulo de la portada se editan en el panel → **Textos del sitio**.
+
 ## Etapas
 - [x] Etapa 1 – Diseño: identidad, portada, menú, versión móvil
 - [x] Etapa 2 – Páginas: Inicio, Nosotros, Entrenamientos, Planes, Competencias/Resultados, Galería, Contacto

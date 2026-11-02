@@ -39,6 +39,7 @@ export const site = {
 export const nav = [
   { href: "/", label: "Inicio" },
   { href: "/nosotros", label: "Nosotros" },
+  { href: "/deportistas", label: "Nuestros deportistas" },
   { href: "/entrenamientos", label: "Entrenamientos" },
   { href: "/planes", label: "Planes" },
   { href: "/competencias", label: "Competencias" },

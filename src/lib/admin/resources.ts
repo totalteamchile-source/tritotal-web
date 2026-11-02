@@ -101,11 +101,21 @@ export const resources: Resource[] = [
       { name: "emergencia_telefono", label: "Teléfono emergencia", type: "text" },
       { name: "plan_id", label: "Plan", type: "relation", relation: { table: "planes", label: "nombre" } },
       { name: "fecha_ingreso", label: "Fecha de ingreso", type: "date", required: true },
-      { name: "notas", label: "Notas", type: "textarea", wide: true },
+      { name: "notas", label: "Notas internas", type: "textarea", wide: true },
+      {
+        name: "publico",
+        label: "Mostrar en «Nuestros deportistas»",
+        type: "checkbox",
+        help: "Solo con autorización del deportista. Se publican foto, nombre, especialidad y logros (nunca datos de contacto).",
+      },
+      { name: "especialidad", label: "Especialidad (pública)", type: "text", placeholder: "Ej: Triatleta 70.3" },
+      { name: "orden_publico", label: "Orden en la página", type: "number", default: 0 },
+      { name: "logros", label: "Logros (públicos)", type: "list", help: "Uno por línea.", wide: true },
+      { name: "foto_url", label: "Foto (pública)", type: "image" },
     ],
-    columns: ["nombre", "telefono", "plan_id", "estado", "fecha_ingreso"],
+    columns: ["nombre", "telefono", "plan_id", "estado", "publico"],
     orderBy: [{ column: "nombre", ascending: true }],
-    revalidate: [],
+    revalidate: ["/deportistas"],
   },
   {
     slug: "planes",
@@ -326,6 +336,8 @@ export const getResource = (slug: string) => resources.find((r) => r.slug === sl
 
 /** Textos editables de la sección "Contenido" (tabla contenido). */
 export const contentKeys = [
+  { clave: "hero_titulo", label: "Frase principal de la portada", type: "text" },
+  { clave: "hero_subtitulo", label: "Subtítulo de la portada", type: "textarea" },
   { clave: "historia", label: "Historia del equipo", type: "textarea" },
   { clave: "mision", label: "Misión", type: "textarea" },
   { clave: "vision", label: "Visión", type: "textarea" },

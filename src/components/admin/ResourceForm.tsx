@@ -65,7 +65,7 @@ function FieldInput({ f, value, relations }: { f: Field; value: unknown; relatio
     case "checkbox":
       return (
         <label className="flex items-center gap-3">
-          <input type="checkbox" name={f.name} defaultChecked={value === true || (value === undefined && f.name !== "destacado")} disabled={f.readonly} className="h-5 w-5 accent-[var(--color-sport)]" />
+          <input type="checkbox" name={f.name} defaultChecked={value === true || (value === undefined && !["destacado", "publico"].includes(f.name))} disabled={f.readonly} className="h-5 w-5 accent-[var(--color-sport)]" />
           <span className="text-sm text-mist">Sí</span>
         </label>
       );

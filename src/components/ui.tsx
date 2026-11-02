@@ -64,7 +64,7 @@ export function SectionTitle({
   align?: "left" | "center";
 }) {
   return (
-    <div className={`mb-10 max-w-3xl lg:mb-14 ${align === "center" ? "mx-auto text-center [&>p:first-child]:justify-center" : ""}`}>
+    <div className={`reveal mb-10 max-w-3xl lg:mb-14 ${align === "center" ? "mx-auto text-center [&>p:first-child]:justify-center" : ""}`}>
       {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
       <h2 className="font-display text-4xl font-extrabold uppercase leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl">
         {title}

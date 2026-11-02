@@ -2,6 +2,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { CartProvider } from "@/components/shop/CartProvider";
+import { Reveal } from "@/components/Reveal";
 
 /** Layout del sitio público (el panel /admin usa el suyo). */
 export default function SitioLayout({ children }: { children: React.ReactNode }) {
@@ -14,6 +15,7 @@ export default function SitioLayout({ children }: { children: React.ReactNode })
       <main id="contenido">{children}</main>
       <Footer />
       <WhatsAppFloat />
+      <Reveal />
     </CartProvider>
   );
 }

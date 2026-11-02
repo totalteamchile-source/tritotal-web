@@ -36,13 +36,13 @@ export function Header() {
           <Logo variant="secundario" height={34} />
         </Link>
 
-        <nav aria-label="Principal" className="hidden lg:block">
+        <nav aria-label="Principal" className="hidden xl:block">
           <ul className="flex items-center gap-1">
             {nav.slice(1).map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`relative px-3 py-2 font-display text-[15px] font-semibold uppercase tracking-wider transition-colors hover:text-white ${
+                  className={`relative whitespace-nowrap px-3 py-2 font-display text-[15px] font-semibold uppercase tracking-wider transition-colors hover:text-white ${
                     isActive(item.href) ? "text-white" : "text-mist"
                   }`}
                 >
@@ -70,7 +70,7 @@ export function Header() {
             aria-expanded={open}
             aria-controls="menu-movil"
             aria-label={open ? "Cerrar menú" : "Abrir menú"}
-            className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 lg:hidden"
+            className="flex h-11 w-11 flex-col items-center justify-center gap-1.5 xl:hidden"
           >
             <span className={`h-0.5 w-6 bg-white transition ${open ? "translate-y-2 rotate-45" : ""}`} />
             <span className={`h-0.5 w-6 bg-white transition ${open ? "opacity-0" : ""}`} />
@@ -83,7 +83,7 @@ export function Header() {
       <div
         id="menu-movil"
         hidden={!open}
-        className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-ink px-4 pb-10 pt-4 lg:hidden"
+        className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-ink px-4 pb-10 pt-4 xl:hidden"
       >
         <ul className="flex flex-col">
           {nav.map((item) => (
