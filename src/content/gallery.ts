@@ -10,6 +10,7 @@ const train = (src: string, alt: string) => ({ src, alt, category: "Entrenamient
 /** Fotos locales (en /public/fotos). Las que se suban desde el panel se muestran primero. */
 export const photos: { src: string; alt: string; category: GalleryCategory }[] = [
   team("/fotos/equipo-piscina.webp", "Integrantes de Tritotal Team con trajes de neopreno en la piscina"),
+  comp("/fotos/ciclismo-claudio-castro.webp", "Claudio Castro en ruta de ciclismo"),
   comp("/fotos/maraton-santiago-42k.webp", "Maximiliano Aranis en el Maratón de Santiago 42K"),
   comp("/fotos/running-320.webp", "Maximiliano Aranis en el tramo de running de un triatlón"),
   comp("/fotos/ciclismo-320.webp", "Maximiliano Aranis en el tramo de ciclismo de un triatlón"),

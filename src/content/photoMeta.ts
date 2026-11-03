@@ -34,4 +34,5 @@ export const photoMeta: Record<string, { w: number; h: number; focus: string }> 
   "/fotos/maraton-santiago-42k.webp": { w: 900, h: 1600, focus: "45% 25%" },
   "/fotos/ciclismo-320.webp": { w: 1066, h: 1600, focus: "50% 30%" },
   "/fotos/running-320.webp": { w: 1000, h: 1488, focus: "55% 15%" },
+  "/fotos/ciclismo-claudio-castro.webp": { w: 1600, h: 1066, focus: "48% 30%" },
 };

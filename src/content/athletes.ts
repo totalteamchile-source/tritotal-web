@@ -25,4 +25,15 @@ Además es corredor de varias maratones de Santiago y Viña del Mar.`,
     logros: ["Triatlón Piedra Roja: 2 participaciones.", "Ironman 70.3 Valdivia: debut en media distancia.", "Maratones de Santiago y Viña del Mar."],
     foto_url: "/fotos/running-320.webp",
   },
+  {
+    id: "claudio-castro",
+    nombre: "Claudio Castro",
+    especialidad: "Ciclista – Tritotal Team",
+    desde: 2026,
+    historia: `Claudio Castro es un ciclista experimentado que este 2026 comenzó sus entrenamientos con Tritotal Team.
+
+Su objetivo: finalizar la carrera más linda del mundo, el Ironman 70.3 de Pucón.`,
+    logros: ["2026: Incorporación a Tritotal Team.", "Objetivo: Ironman 70.3 Pucón."],
+    foto_url: "/fotos/ciclismo-claudio-castro.webp",
+  },
 ];
