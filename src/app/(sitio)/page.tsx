@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { disciplines, programs } from "@/content/trainings";
 import { heroPhotos, disciplinePhotos, featuredPhotos } from "@/content/gallery";
-import { disciplineIcon } from "@/components/Icons";
+import { disciplineIcon, SwimIcon, BikeIcon, RunIcon, TeamIcon, CalendarIcon, TrophyIcon, PinIcon } from "@/components/Icons";
 import { ButtonLink, Eyebrow, PhotoSlot, Section, SectionTitle, ArrowIcon } from "@/components/ui";
 import { whatsappLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/Icons";
@@ -30,6 +30,23 @@ function HeroTitle({ text }: { text: string | null }) {
   });
   return <>{out}</>;
 }
+
+const quickLinks = [
+  { href: "/entrenamientos#natacion", label: "Natación", Icon: SwimIcon },
+  { href: "/entrenamientos#ciclismo", label: "Ciclismo", Icon: BikeIcon },
+  { href: "/entrenamientos#running", label: "Running", Icon: RunIcon },
+  { href: "/deportistas", label: "Equipo", Icon: TeamIcon },
+  { href: "/planes", label: "Planes", Icon: CalendarIcon },
+  { href: "/competencias", label: "Competencias", Icon: TrophyIcon },
+];
+
+/** Lugares donde compite el equipo (según lo informado por Tritotal Team). */
+const destinations = [
+  { name: "Pucón", race: "Ironman 70.3 Pucón" },
+  { name: "Puerto Varas", race: "Triatlón" },
+  { name: "Coquimbo", race: "Atriaman" },
+  { name: "Valdivia", race: "Ironman e Ironman 70.3" },
+];
 
 const pillars = [
   { n: "01", title: "Disciplina", text: "Cada sesión tiene un propósito dentro de tu planificación." },
@@ -95,6 +112,45 @@ export default async function Home() {
                 <p className="font-display text-2xl font-bold sm:text-4xl">{v}</p>
                 <p className="text-[11px] uppercase tracking-[0.25em] text-mist">{l}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ACCESOS RÁPIDOS */}
+      <nav aria-label="Accesos rápidos" className="border-b border-white/10 bg-petrol-950">
+        <ul className="mx-auto grid max-w-7xl grid-cols-3 px-4 sm:px-6 md:grid-cols-6 lg:px-8">
+          {quickLinks.map(({ href, label, Icon }) => (
+            <li key={href}>
+              <Link href={href} className="group flex flex-col items-center gap-2 px-2 py-6 text-center transition hover:bg-white/5">
+                <Icon className="h-9 w-9 text-sport transition group-hover:scale-110" />
+                <span className="font-display text-xs font-bold uppercase tracking-widest sm:text-sm">{label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      {/* DÓNDE COMPETIMOS */}
+      <section className="bg-ink py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionTitle eyebrow="Dónde competimos" title={<>Vive el <span className="text-sport">triatlón</span></>} />
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {destinations.map((d) => (
+              <Link
+                key={d.name}
+                href="/competencias"
+                className="group relative flex min-h-36 flex-col justify-end overflow-hidden rounded-sm border border-white/10 bg-gradient-to-br from-petrol-700 via-petrol-900 to-ink p-5 transition hover:border-sport/60 lg:-skew-x-6"
+              >
+                <span className="absolute -right-6 -top-6 h-28 w-28 rounded-full bg-sport/10 blur-2xl transition group-hover:bg-sport/25" aria-hidden />
+                <span className="lg:skew-x-6">
+                  <span className="flex items-center gap-2 font-display text-2xl font-extrabold uppercase sm:text-3xl">
+                    <PinIcon className="h-6 w-6 shrink-0 text-sport" />
+                    {d.name}
+                  </span>
+                  <span className="mt-1 block text-sm text-mist">{d.race}</span>
+                </span>
+              </Link>
             ))}
           </div>
         </div>

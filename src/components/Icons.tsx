@@ -39,4 +39,34 @@ export const ArrowIcon = ({ className }: P) => (
   </svg>
 );
 
+const base = { viewBox: "0 0 48 48", fill: "none", stroke: "currentColor", strokeWidth: 2.5, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
+
+export const TeamIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <circle cx="24" cy="14" r="5" />
+    <circle cx="11" cy="18" r="4" />
+    <circle cx="37" cy="18" r="4" />
+    <path d="M15 40v-6a9 9 0 0118 0v6M4 38v-3a7 7 0 0110-6M44 38v-3a7 7 0 00-10-6" />
+  </svg>
+);
+
+export const CalendarIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <rect x="6" y="9" width="36" height="33" rx="3" />
+    <path d="M6 18h36M15 5v8M33 5v8M14 26h4M22 26h4M30 26h4M14 34h4M22 34h4" />
+  </svg>
+);
+
+export const TrophyIcon = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M15 6h18v12a9 9 0 01-18 0V6zM15 10H7v3a7 7 0 008 7M33 10h8v3a7 7 0 01-8 7M24 27v7M16 42h16M18 42l2-8h8l2 8" />
+  </svg>
+);
+
+export const PinIcon = ({ className }: P) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+    <path d="M12 2a7 7 0 00-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 00-7-7zm0 9.5A2.5 2.5 0 1112 6.5a2.5 2.5 0 010 5z" />
+  </svg>
+);
+
 export const disciplineIcon = { natacion: SwimIcon, ciclismo: BikeIcon, running: RunIcon };
