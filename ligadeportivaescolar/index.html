@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Liga Deportiva Escolar</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Liga Deportiva Escolar: futbolito, básquetbol 5x5 y 3x3, vóleibol, beach vóley, natación, ajedrez y tenis de mesa. Categorías Sub 14, Sub 16 y Sub 18, damas y varones.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: marcador deportivo — portada con cifras de la liga, grilla de disciplinas, matriz deporte × categoría × rama que abre cada competencia. */
+:root{
+  --bg:#f3f5f9; --surface:#ffffff; --ink:#0f1d3a; --muted:#56617a; --line:#d9dfea;
+  --accent:#e8590c; --accent-ink:#ffffff; --pitch:#1f7a4d; --navy:#0f1d3a; --on-navy:#eef2fa;
+  --chip:#e8ecf4;
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --radius:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b1324; --surface:#121d33; --ink:#e7ecf6; --muted:#9aa6bf; --line:#24314d;
+  --accent:#ff7a33; --accent-ink:#1a0d04; --pitch:#3fb47a; --navy:#071023; --on-navy:#e7ecf6;
+  --chip:#1b2843; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1324; --surface:#121d33; --ink:#e7ecf6; --muted:#9aa6bf; --line:#24314d;
+  --accent:#ff7a33; --accent-ink:#1a0d04; --pitch:#3fb47a; --navy:#071023; --on-navy:#e7ecf6;
+  --chip:#1b2843; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.02;text-wrap:balance;margin:0;letter-spacing:.005em}
+h2{font-size:clamp(2rem,5vw,2.9rem);text-transform:uppercase}
+h3{font-size:1.45rem;font-weight:700}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.eyebrow{font:500 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lead{color:var(--muted);max-width:62ch;font-size:1.06rem}
+section{padding-block:64px}
+.sec-head{display:grid;gap:10px;margin-bottom:28px}
+
+/* Header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--navy)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--navy);color:var(--on-navy)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.badge{width:38px;height:38px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:800 1rem/1 var(--display);letter-spacing:.02em}
+.brand b{font:700 1.15rem/1 var(--display);text-transform:uppercase;letter-spacing:.03em;display:block}
+.brand small{font:500 .68rem/1.2 var(--mono);opacity:.7}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{text-decoration:none;font-weight:600;font-size:.95rem;padding:8px 10px;border-radius:6px;opacity:.85}
+nav a:hover{opacity:1;background:rgba(255,255,255,.08)}
+nav .cta{background:var(--accent);color:var(--accent-ink);opacity:1}
+@media (max-width:760px){nav a:not(.cta){display:none}}
+
+/* Hero */
+.hero{background:var(--navy);color:var(--on-navy);padding-block:56px 72px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-120px;top:-80px;width:460px;height:460px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.08);box-shadow:0 0 0 70px rgba(255,255,255,.025),0 0 0 140px rgba(255,255,255,.02);pointer-events:none}
+.hero .wrap{position:relative;z-index:1;display:grid;gap:28px}
+.hero h1{font-size:clamp(3rem,10vw,6.4rem);text-transform:uppercase;line-height:.9}
+.hero h1 span{color:var(--accent)}
+.hero .lead{color:var(--on-navy);opacity:.8}
+.actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:8px;font:700 1rem/1 var(--body);text-decoration:none;border:2px solid transparent;cursor:pointer}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-ghost{border-color:rgba(255,255,255,.35);color:var(--on-navy);background:transparent}
+.score{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.15);margin-top:8px}
+.score div{padding:18px 14px 0 0;display:grid;gap:4px}
+.score strong{font:800 clamp(2.2rem,6vw,3.4rem)/1 var(--display);font-variant-numeric:tabular-nums}
+.score span{font:500 .72rem/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+@media (max-width:560px){.score{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Deportes */
+.sports{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.sports{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:420px){.sports{grid-template-columns:1fr}}
+.sport{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;display:grid;gap:10px;align-content:start;text-align:left;font:inherit;color:inherit;cursor:pointer;transition:border-color .15s,transform .15s}
+.sport:hover{border-color:var(--accent);transform:translateY(-2px)}
+.sport svg{width:40px;height:40px;color:var(--accent)}
+.sport p{color:var(--muted);font-size:.95rem}
+.tag{justify-self:start;font:500 .68rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:5px 8px;border-radius:4px;background:var(--chip);color:var(--muted)}
+
+/* Categorías */
+.cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:700px){.cats{grid-template-columns:1fr}}
+.cat{border-top:4px solid var(--ink);padding-top:16px;display:grid;gap:8px}
+.cat .num{font:800 4.2rem/.9 var(--display);font-variant-numeric:tabular-nums}
+.cat .num small{font-size:1.4rem;margin-right:4px;color:var(--accent)}
+.cat p{color:var(--muted)}
+.ramas{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.rama{display:inline-flex;align-items:center;gap:8px;font-weight:700;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.dot{width:10px;height:10px;border-radius:50%}
+.d-damas{background:var(--accent)} .d-varones{background:var(--pitch)}
+
+/* Matriz */
+.matrix-box{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-variant-numeric:tabular-nums}
+th,td{padding:10px 8px;text-align:center;border-bottom:1px solid var(--line)}
+thead th{font:500 .7rem/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+thead tr:first-child th{font:700 1.1rem/1 var(--display);color:var(--ink);letter-spacing:.02em;border-bottom:none;padding-bottom:2px}
+tbody th{text-align:left;font-weight:700;white-space:nowrap;padding-left:16px}
+tbody tr:last-child>*{border-bottom:none}
+td button{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--bg);cursor:pointer;display:inline-grid;place-items:center}
+td button .dot{width:9px;height:9px}
+td button:hover{border-color:var(--ink)}
+td button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+.sep{border-left:1px solid var(--line)}
+
+/* Panel competencia */
+.panel{margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.panel-head{background:var(--navy);color:var(--on-navy);padding:18px 20px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.panel-head h3{font-size:clamp(1.6rem,4vw,2.2rem);text-transform:uppercase}
+.selects{display:flex;gap:8px;flex-wrap:wrap}
+select{font:600 .95rem var(--body);padding:8px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.25);background:var(--surface);color:var(--ink)}
+.boards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:760px){.boards{grid-template-columns:1fr}}
+.board{padding:20px;display:grid;gap:12px;align-content:start;border-right:1px solid var(--line)}
+.board:last-child{border-right:none}
+@media (max-width:760px){.board{border-right:none;border-bottom:1px solid var(--line)}.board:last-child{border-bottom:none}}
+.board h4{margin:0;font:500 .74rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.empty{border:1.5px dashed var(--line);border-radius:8px;padding:18px;color:var(--muted);font-size:.95rem}
+
+/* Inscripción */
+.split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:40px;align-items:start}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.steps{display:grid;gap:18px;margin:24px 0 0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:grid;grid-template-columns:40px 1fr;gap:12px;counter-increment:s}
+.steps li::before{content:counter(s);width:36px;height:36px;border-radius:50%;border:2px solid var(--accent);color:var(--accent);display:grid;place-items:center;font:800 1.2rem/1 var(--display)}
+.steps b{display:block}
+.steps span{color:var(--muted)}
+form{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;display:grid;gap:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:520px){.row{grid-template-columns:1fr}}
+label{display:grid;gap:6px;font-weight:600;font-size:.92rem}
+input[type=text],input[type=email],input[type=tel]{font:inherit;padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);width:100%}
+fieldset{border:none;margin:0;padding:0;display:grid;gap:8px}
+legend{font-weight:600;font-size:.92rem;margin-bottom:8px;padding:0}
+.checks{display:flex;flex-wrap:wrap;gap:8px}
+.checks label{display:inline-flex;align-items:center;gap:6px;font-weight:600;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--bg);cursor:pointer}
+.checks input{accent-color:var(--accent);margin:0}
+.checks label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--bg))}
+.note{font-size:.88rem;color:var(--muted)}
+.ok{border-radius:8px;padding:14px;background:color-mix(in srgb,var(--pitch) 14%,var(--surface));border:1px solid var(--pitch)}
+.err{color:var(--accent);font-weight:600;font-size:.92rem}
+
+/* Footer */
+footer{background:var(--navy);color:var(--on-navy);padding-block:40px}
+footer .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media (max-width:700px){footer .wrap{grid-template-columns:1fr}}
+footer h4{margin:0 0 8px;font:700 1.1rem/1 var(--display);text-transform:uppercase;letter-spacing:.04em}
+footer p,footer li{opacity:.8;font-size:.95rem}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.pend{font:500 .72rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border-radius:4px;border:1px solid currentColor;opacity:.7}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#inicio" aria-label="Liga Deportiva Escolar, inicio">
+      <span class="badge">LDE</span>
+      <span><b>Liga Deportiva Escolar</b><small>ligadeportivaescolar.cl</small></span>
+    </a>
+    <nav aria-label="Principal">
+      <a href="#deportes">Deportes</a>
+      <a href="#categorias">Categorías</a>
+      <a href="#competencias">Competencias</a>
+      <a class="cta" href="#inscripcion">Inscribir colegio</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Temporada escolar</p>
+      <h1>Liga Deportiva <span>Escolar</span></h1>
+      <p class="lead">Ocho disciplinas, tres categorías y competencias para damas y varones. Aquí encuentras los deportes, las categorías, el calendario de cada competencia y la inscripción de tu colegio.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#inscripcion">Inscribir colegio</a>
+        <a class="btn btn-ghost" href="#competencias">Ver competencias</a>
+      </div>
+      <div class="score" aria-label="La liga en cifras">
+        <div><strong id="n-dep">8</strong><span>Deportes</span></div>
+        <div><strong>3</strong><span>Categorías</span></div>
+        <div><strong>2</strong><span>Ramas</span></div>
+        <div><strong id="n-comp">48</strong><span>Competencias</span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="deportes">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Disciplinas</p>
+        <h2>Deportes</h2>
+        <p class="lead">Cada deporte se juega en Sub 14, Sub 16 y Sub 18, en rama damas y rama varones. Toca un deporte para ver sus competencias.</p>
+      </div>
+      <div class="sports" id="sports"></div>
+    </div>
+  </section>
+
+  <section id="categorias" style="background:var(--surface);border-block:1px solid var(--line)">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Edades</p>
+        <h2>Categorías</h2>
+        <p class="lead">La edad límite de cada categoría y los años de nacimiento permitidos se publican en las bases de la temporada.</p>
+      </div>
+      <div class="cats" id="cats"></div>
+      <div class="ramas" aria-label="Ramas">
+        <span class="rama"><i class="dot d-damas"></i>Damas</span>
+        <span class="rama"><i class="dot d-varones"></i>Varones</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="competencias">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Deporte × categoría × rama</p>
+        <h2>Competencias</h2>
+        <p class="lead">Elige una casilla para ver el calendario, la tabla y los resultados de esa competencia.</p>
+      </div>
+      <div class="matrix-box"><table id="matrix" aria-label="Matriz de competencias"></table></div>
+      <div class="panel" id="panel" aria-live="polite">
+        <div class="panel-head">
+          <div style="display:grid;gap:6px">
+            <p class="eyebrow" id="p-eyebrow">Competencia</p>
+            <h3 id="p-title">—</h3>
+          </div>
+          <div class="selects">
+            <select id="sel-sport" aria-label="Deporte"></select>
+            <select id="sel-cat" aria-label="Categoría"></select>
+            <select id="sel-rama" aria-label="Rama"></select>
+          </div>
+        </div>
+        <div class="boards">
+          <div class="board"><h4 id="b1">Próximos partidos</h4><div class="empty" id="e1"></div></div>
+          <div class="board"><h4 id="b2">Tabla de posiciones</h4><div class="empty" id="e2"></div></div>
+          <div class="board"><h4>Resultados</h4><div class="empty">Aún no hay resultados publicados.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="inscripcion" style="background:var(--surface);border-top:1px solid var(--line)">
+    <div class="wrap split">
+      <div>
+        <div class="sec-head">
+          <p class="eyebrow">Colegios</p>
+          <h2>Inscripción</h2>
+          <p class="lead">Inscribe a tu colegio indicando los deportes, categorías y ramas en que participará.</p>
+        </div>
+        <ol class="steps">
+          <li><div><b>Envía la solicitud</b><span>Completa el formulario con los datos del colegio y del profesor encargado.</span></div></li>
+          <li><div><b>Recibe las bases</b><span>La organización te envía las bases, plazos y requisitos de cada deporte.</span></div></li>
+          <li><div><b>Inscribe a tus deportistas</b><span>Envía la nómina por categoría y rama antes del cierre.</span></div></li>
+        </ol>
+      </div>
+      <form id="form" novalidate>
+        <div class="row">
+          <label for="f-colegio">Colegio<input id="f-colegio" type="text" required autocomplete="organization"></label>
+          <label for="f-comuna">Comuna<input id="f-comuna" type="text" required></label>
+        </div>
+        <div class="row">
+          <label for="f-nombre">Profesor/a encargado/a<input id="f-nombre" type="text" required autocomplete="name"></label>
+          <label for="f-tel">Teléfono<input id="f-tel" type="tel" autocomplete="tel" placeholder="+56 9"></label>
+        </div>
+        <label for="f-mail">Correo<input id="f-mail" type="email" required autocomplete="email"></label>
+        <fieldset><legend>Deportes</legend><div class="checks" id="f-sports"></div></fieldset>
+        <div class="row">
+          <fieldset><legend>Categorías</legend><div class="checks" id="f-cats"></div></fieldset>
+          <fieldset><legend>Ramas</legend><div class="checks" id="f-ramas"></div></fieldset>
+        </div>
+        <p class="err" id="f-err" hidden></p>
+        <button class="btn btn-primary" type="submit" style="justify-self:start">Enviar solicitud</button>
+        <div class="ok" id="f-ok" hidden></div>
+        <p class="note">El envío del formulario se activa al conectar el correo oficial de la liga.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>Liga Deportiva Escolar</h4>
+      <p>Competencias escolares de futbolito, básquetbol, vóleibol, beach vóley, natación, ajedrez y tenis de mesa.</p>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <ul>
+        <li>Correo <span class="pend">por confirmar</span></li>
+        <li>Teléfono <span class="pend">por confirmar</span></li>
+        <li>Instagram <span class="pend">por confirmar</span></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Sitio</h4>
+      <ul>
+        <li><a href="#deportes">Deportes</a></li>
+        <li><a href="#categorias">Categorías</a></li>
+        <li><a href="#competencias">Competencias</a></li>
+        <li><a href="#inscripcion">Inscripción</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ====== CONTENIDO EDITABLE ====== */
+const DEPORTES = [
+  { id:"futbolito",  nombre:"Futbolito",       tipo:"equipo",     texto:"Fútbol en cancha reducida, partidos rápidos y de mucho gol.", icon:"ball" },
+  { id:"basquet5",   nombre:"Básquetbol 5x5",  tipo:"equipo",     texto:"Básquetbol tradicional en cancha completa, cinco contra cinco.", icon:"basket" },
+  { id:"basquet3",   nombre:"Básquetbol 3x3",  tipo:"equipo",     texto:"Media cancha, un aro y tres contra tres.", icon:"basket" },
+  { id:"voleibol",   nombre:"Vóleibol piso",   tipo:"equipo",     texto:"Vóleibol en cancha de gimnasio.", icon:"volley" },
+  { id:"beach",      nombre:"Beach vóley",     tipo:"equipo",     texto:"Vóleibol en arena, en duplas.", icon:"beach" },
+  { id:"natacion",   nombre:"Natación",        tipo:"individual", texto:"Pruebas por estilo y distancia en piscina.", icon:"swim" },
+  { id:"ajedrez",    nombre:"Ajedrez",         tipo:"individual", texto:"Torneo por rondas con ranking por categoría.", icon:"chess" },
+  { id:"tenismesa",  nombre:"Tenis de mesa",   tipo:"individual", texto:"Partidos individuales al mejor de sets.", icon:"pong" },
+];
+const CATEGORIAS = [
+  { id:"sub14", nombre:"Sub 14", edad:14, texto:"Estudiantes menores de 14 años." },
+  { id:"sub16", nombre:"Sub 16", edad:16, texto:"Estudiantes menores de 16 años." },
+  { id:"sub18", nombre:"Sub 18", edad:18, texto:"Estudiantes menores de 18 años." },
+];
+const RAMAS = [ { id:"damas", nombre:"Damas" }, { id:"varones", nombre:"Varones" } ];
+/* ================================ */
+
+const ICONS = {
+  ball:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5l4 2.9-1.5 4.7h-5L8 10.4z"/><path d="M12 3v4.5M16 10.4l4.3-1.4M14.5 15.1l2.6 3.6M9.5 15.1l-2.6 3.6M8 10.4L3.7 9"/>',
+  basket:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18"/><path d="M5.6 5.6c2.6 2.6 2.6 10.2 0 12.8M18.4 5.6c-2.6 2.6-2.6 10.2 0 12.8"/>',
+  volley:'<circle cx="12" cy="12" r="9"/><path d="M12 3c-1 4 0 7 3 9M12 12c-3.5 1-6.5 0-8.6-3M12 12c1 3.5 4 5.5 7.6 5.5M12 12l-3 8.5"/>',
+  beach:'<circle cx="12" cy="10" r="6"/><path d="M12 4c-.6 2.4 0 4.2 1.8 6M12 10c-2 .6-4 0-5.4-1.6"/><path d="M2 20c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/>',
+  swim:'<circle cx="16" cy="6" r="2"/><path d="M4 12l5-3 3 3 3-2"/><path d="M2 16c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0M2 20c2-1.5 4-1.5 6 0s4 1.5 6 0 4-1.5 6 0"/>',
+  chess:'<path d="M12 2v4M10 4h4"/><path d="M9 8h6l-1 7h-4z"/><path d="M7 21h10M8 18h8l1 3H7z"/>',
+  pong:'<circle cx="9" cy="9" r="6"/><path d="M13.2 13.2L20 20"/><circle cx="19" cy="5" r="1.6"/>',
+};
+const svg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]}</svg>`;
+const $ = id => document.getElementById(id);
+const state = { sport: DEPORTES[0].id, cat: CATEGORIAS[0].id, rama: RAMAS[0].id };
+
+$("n-dep").textContent = DEPORTES.length;
+$("n-comp").textContent = DEPORTES.length * CATEGORIAS.length * RAMAS.length;
+
+// Deportes
+$("sports").innerHTML = DEPORTES.map(d => `
+  <button class="sport" type="button" data-sport="${d.id}">
+    ${svg(d.icon)}<h3>${d.nombre}</h3><p>${d.texto}</p>
+    <span class="tag">${d.tipo === "equipo" ? "Por equipos" : "Individual"}</span>
+  </button>`).join("");
+$("sports").addEventListener("click", e => {
+  const b = e.target.closest("[data-sport]"); if (!b) return;
+  select({ sport: b.dataset.sport }); $("competencias").scrollIntoView();
+});
+
+// Categorías
+$("cats").innerHTML = CATEGORIAS.map(c => `
+  <div class="cat"><div class="num"><small>Sub</small>${c.edad}</div><p>${c.texto} Damas y varones compiten por separado.</p></div>`).join("");
+
+// Matriz
+const head1 = `<tr><th></th>${CATEGORIAS.map(c => `<th colspan="${RAMAS.length}" class="sep">${c.nombre}</th>`).join("")}</tr>`;
+const head2 = `<tr><th style="text-align:left;padding-left:16px">Deporte</th>${CATEGORIAS.map(() => RAMAS.map((r,i) => `<th${i===0?' class="sep"':''}>${r.nombre}</th>`).join("")).join("")}</tr>`;
+const body = DEPORTES.map(d => `<tr><th scope="row">${d.nombre}</th>${CATEGORIAS.map(c => RAMAS.map((r,i) => `
+  <td${i===0?' class="sep"':''}><button type="button" data-s="${d.id}" data-c="${c.id}" data-r="${r.id}" aria-label="${d.nombre} ${c.nombre} ${r.nombre}" aria-pressed="false"><i class="dot d-${r.id}"></i></button></td>`).join("")).join("")}</tr>`).join("");
+$("matrix").innerHTML = `<thead>${head1}${head2}</thead><tbody>${body}</tbody>`;
+$("matrix").addEventListener("click", e => {
+  const b = e.target.closest("button[data-s]"); if (!b) return;
+  select({ sport: b.dataset.s, cat: b.dataset.c, rama: b.dataset.r });
+});
+
+// Selects del panel
+const fill = (el, list) => el.innerHTML = list.map(x => `<option value="${x.id}">${x.nombre}</option>`).join("");
+fill($("sel-sport"), DEPORTES); fill($("sel-cat"), CATEGORIAS); fill($("sel-rama"), RAMAS);
+$("sel-sport").onchange = e => select({ sport: e.target.value });
+$("sel-cat").onchange = e => select({ cat: e.target.value });
+$("sel-rama").onchange = e => select({ rama: e.target.value });
+
+function select(patch) {
+  Object.assign(state, patch);
+  const d = DEPORTES.find(x => x.id === state.sport);
+  const c = CATEGORIAS.find(x => x.id === state.cat);
+  const r = RAMAS.find(x => x.id === state.rama);
+  $("p-title").textContent = `${d.nombre} · ${c.nombre} · ${r.nombre}`;
+  $("p-eyebrow").textContent = d.tipo === "equipo" ? "Competencia por equipos" : "Competencia individual";
+  const ind = d.tipo === "individual";
+  $("b1").textContent = d.id === "natacion" ? "Programa de pruebas" : d.id === "ajedrez" ? "Próximas rondas" : "Próximos partidos";
+  $("b2").textContent = ind ? "Ranking" : "Tabla de posiciones";
+  $("e1").textContent = ind ? "El programa se publicará al cerrar las inscripciones." : "El fixture se publicará al cerrar las inscripciones.";
+  $("e2").textContent = ind ? "El ranking aparecerá con los primeros resultados." : "La tabla aparecerá con los primeros partidos jugados.";
+  $("sel-sport").value = state.sport; $("sel-cat").value = state.cat; $("sel-rama").value = state.rama;
+  document.querySelectorAll("#matrix button[data-s]").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.s === state.sport && b.dataset.c === state.cat && b.dataset.r === state.rama)));
+}
+select({});
+
+// Formulario
+const checks = (el, list, name) => el.innerHTML = list.map(x =>
+  `<label><input type="checkbox" id="${name}-${x.id}" name="${name}" value="${x.id}">${x.nombre}</label>`).join("");
+checks($("f-sports"), DEPORTES, "dep"); checks($("f-cats"), CATEGORIAS, "cat"); checks($("f-ramas"), RAMAS, "rama");
+
+$("form").addEventListener("submit", e => {
+  e.preventDefault();
+  const f = e.target, err = $("f-err"), ok = $("f-ok");
+  const pick = n => [...f.querySelectorAll(`input[name=${n}]:checked`)].map(i => i.parentElement.textContent.trim());
+  const dep = pick("dep"), cat = pick("cat"), ram = pick("rama");
+  const missing = [];
+  ["f-colegio","f-comuna","f-nombre","f-mail"].forEach(id => { if (!$(id).value.trim()) missing.push($(id).parentElement.firstChild.textContent.trim()); });
+  if ($("f-mail").value && !$("f-mail").checkValidity()) missing.push("un correo válido");
+  if (!dep.length) missing.push("al menos un deporte");
+  if (!cat.length) missing.push("al menos una categoría");
+  if (!ram.length) missing.push("al menos una rama");
+  ok.hidden = true;
+  if (missing.length) { err.textContent = "Falta completar: " + missing.join(", ") + "."; err.hidden = false; return; }
+  err.hidden = true;
+  ok.replaceChildren();
+  const t = document.createElement("b"); t.textContent = "Solicitud lista para " + $("f-colegio").value.trim();
+  const d1 = document.createElement("div"); d1.textContent = `Deportes: ${dep.join(", ")}.`;
+  const d2 = document.createElement("div"); d2.textContent = `Categorías: ${cat.join(", ")} · Ramas: ${ram.join(", ")}.`;
+  ok.append(t, d1, d2);
+  ok.hidden = false;
+});
+</script>
+</body>
+</html>
