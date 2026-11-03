@@ -54,6 +54,6 @@ El año pasado terminó el Ironman 70.3 de Valdivia y ahora va por el Full Ironm
 
 Ya terminó el Ironman 70.3 de Valdivia y ahora va por el Full Ironman.`,
     logros: ["Podios en el circuito de triatlón chileno.", "Ironman 70.3 Valdivia: finisher.", "Próximo objetivo: Full Ironman."],
-    foto_url: null,
+    foto_url: "/fotos/alexis-garcia.webp",
   },
 ];
