@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Barlow, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
+import { Analytics } from "@vercel/analytics/next";
 
 const barlow = Barlow({
   subsets: ["latin"],
@@ -37,6 +38,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="es-CL" className={`${barlow.variable} ${barlowCondensed.variable}`}>
       <body>
         {children}
+        {/* Conteo de visitas anónimo (Vercel Web Analytics, sin cookies) */}
+        <Analytics />
       </body>
     </html>
   );

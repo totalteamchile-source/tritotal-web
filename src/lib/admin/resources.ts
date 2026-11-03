@@ -337,6 +337,24 @@ export const resources: Resource[] = [
     orderBy: [{ column: "orden", ascending: true }],
     revalidate: ["/nosotros"],
   },
+  {
+    slug: "auspiciadores",
+    table: "auspiciadores",
+    title: "Auspiciadores",
+    singular: "auspiciador",
+    roles: ["admin"],
+    description: "Marcas que apoyan al equipo. Aparecen en la portada y en el pie de página.",
+    fields: [
+      { name: "nombre", label: "Nombre de la marca", type: "text", required: true },
+      { name: "logo_url", label: "Logo (PNG con fondo transparente, ideal blanco o a color)", type: "image" },
+      { name: "enlace", label: "Sitio web o Instagram", type: "text", placeholder: "https://…" },
+      { name: "orden", label: "Orden", type: "number", help: "Menor número aparece primero.", default: 0 },
+      { name: "activo", label: "Visible en el sitio", type: "checkbox" },
+    ],
+    columns: ["nombre", "orden", "activo"],
+    orderBy: [{ column: "orden", ascending: true }],
+    revalidate: ["/"],
+  },
 ];
 
 export const getResource = (slug: string) => resources.find((r) => r.slug === slug);

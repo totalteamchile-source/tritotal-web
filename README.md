@@ -133,3 +133,13 @@ Requiere `supabase/migrations/0005_calendario_competencias.sql`, que agrega esos
 
 La ficha del fundador viene precargada en `src/content/about.ts`. Con la base de datos activa se administra en el panel → **Entrenadores**
 (campos «Formación académica», un título por línea, y «Perfil profesional»). Requiere `supabase/migrations/0006_entrenadores_formacion.sql`.
+
+## Auspiciadores
+
+Panel → **Auspiciadores** (nombre, logo, enlace, orden). La franja «Nos auspician» aparece en la portada solo si hay al menos uno.
+Sin base de datos se cargan en `src/content/sponsors.ts`. Requiere `supabase/migrations/0008_auspiciadores.sql`.
+
+## Visitas
+
+El sitio incluye Vercel Web Analytics (`<Analytics />` en `src/app/layout.tsx`, sin cookies). Para ver los datos:
+Vercel → proyecto **tritotal-web** → pestaña **Analytics** → **Enable** (una sola vez).

@@ -6,7 +6,8 @@ import { ButtonLink, Eyebrow, PhotoSlot, Section, SectionTitle, ArrowIcon } from
 import { whatsappLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "@/components/Icons";
 import { Logo } from "@/components/Logo";
-import { getHero } from "@/lib/data";
+import { getHero, getSponsors } from "@/lib/data";
+import { Sponsors } from "@/components/Sponsors";
 import type { ReactNode } from "react";
 
 export const revalidate = 300;
@@ -56,7 +57,7 @@ const pillars = [
 ];
 
 export default async function Home() {
-  const hero = await getHero();
+  const [hero, sponsors] = await Promise.all([getHero(), getSponsors()]);
   return (
     <>
       {/* PORTADA */}
@@ -250,6 +251,8 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <Sponsors sponsors={sponsors} />
 
       {/* CTA FINAL */}
       <section className="relative overflow-hidden bg-sport text-ink">

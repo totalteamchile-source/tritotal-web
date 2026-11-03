@@ -6,6 +6,7 @@ import { plans as localPlans, type Plan } from "@/content/plans";
 import { weeklySchedule, competitions as localComps, results as localResults, type ScheduleItem, type Competition, type Result } from "@/content/events";
 import { about as localAbout } from "@/content/about";
 import { athletes as localAthletes } from "@/content/athletes";
+import { sponsors as localSponsors, type Sponsor } from "@/content/sponsors";
 import { photos as localPhotos, videos as localVideos, news as localNews, type GalleryCategory } from "@/content/gallery";
 
 /**
@@ -179,3 +180,12 @@ export async function getHero() {
   const c = await getContenido();
   return { titulo: c.hero_titulo || null, subtitulo: c.hero_subtitulo || null };
 }
+
+/** Auspiciadores visibles (con la base activa, los del panel; si no, los de src/content/sponsors.ts). */
+export const getSponsors = () =>
+  fromDb<Sponsor[]>(async (db) => {
+    const rows = must(await db.from("auspiciadores").select("nombre,logo_url,enlace").eq("activo", true).order("orden"));
+    return rows.length
+      ? rows.map((r) => ({ name: r.nombre, logo: r.logo_url ?? null, url: /^https?:\/\//i.test(r.enlace ?? "") ? r.enlace : null }))
+      : localSponsors;
+  }, localSponsors);

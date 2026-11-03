@@ -22,7 +22,7 @@ export const site = {
 
   // Pendientes: completar con los datos oficiales.
   instagram: null as string | null, // ej: "https://instagram.com/usuario"
-  email: null as string | null, // ej: "contacto@dominio.cl"
+  email: "totalteamchile@gmail.com" as string | null,
   city: null as string | null,
 
   /**
