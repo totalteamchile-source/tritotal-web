@@ -36,4 +36,24 @@ Su objetivo: finalizar la carrera más linda del mundo, el Ironman 70.3 de Pucó
     logros: ["2026: Incorporación a Tritotal Team.", "Objetivo: Ironman 70.3 Pucón."],
     foto_url: "/fotos/ciclismo-claudio-castro.webp",
   },
+  {
+    id: "manuel-olivares",
+    nombre: "Manuel Olivares",
+    especialidad: "Triatleta – Tritotal Team",
+    historia: `Manuel Olivares es un triatleta de vasta experiencia, con distintos podios en el circuito del triatlón.
+
+El año pasado terminó el Ironman 70.3 de Valdivia y ahora va por el Full Ironman en Valdivia. Además ha terminado tres veces Pucón y una vez Puerto Varas.`,
+    logros: ["Podios en el circuito de triatlón.", "Ironman 70.3 Valdivia: finisher.", "Pucón: 3 veces finisher.", "Puerto Varas: 1 vez finisher.", "Próximo objetivo: Full Ironman Valdivia."],
+    foto_url: null,
+  },
+  {
+    id: "alexis-garcia",
+    nombre: "Alexis García",
+    especialidad: "Triatleta – Tritotal Team",
+    historia: `Alexis García es un triatleta de buen rendimiento, que ha obtenido distintos podios en el circuito de triatlón chileno.
+
+Ya terminó el Ironman 70.3 de Valdivia y ahora va por el Full Ironman.`,
+    logros: ["Podios en el circuito de triatlón chileno.", "Ironman 70.3 Valdivia: finisher.", "Próximo objetivo: Full Ironman."],
+    foto_url: null,
+  },
 ];
