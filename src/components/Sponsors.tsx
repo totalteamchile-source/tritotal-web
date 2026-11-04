@@ -13,7 +13,7 @@ export function Sponsors({ sponsors }: { sponsors: Sponsor[] }) {
         <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
           {sponsors.map((s) => {
             const content = s.logo ? (
-              <Image src={s.logo} alt={s.name} width={180} height={72} className="h-14 w-auto max-w-[180px] object-contain opacity-80 transition hover:opacity-100" />
+              <Image src={s.logo} alt={s.name} width={240} height={80} className="h-16 w-auto max-w-[240px] sm:h-20 object-contain opacity-80 transition hover:opacity-100" />
             ) : (
               <span className="font-display text-2xl font-bold uppercase text-white/70 transition hover:text-white">{s.name}</span>
             );

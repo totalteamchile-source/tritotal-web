@@ -5,4 +5,6 @@
  */
 export type Sponsor = { name: string; logo: string | null; url?: string | null };
 
-export const sponsors: Sponsor[] = [];
+export const sponsors: Sponsor[] = [
+  { name: "Aeropolis – Templo del Deporte", logo: "/auspiciadores/aeropolis-blanco.png", url: null },
+];
