@@ -5,12 +5,12 @@ import type { Sponsor } from "@/content/sponsors";
 export function Sponsors({ sponsors }: { sponsors: Sponsor[] }) {
   if (!sponsors.length) return null;
   return (
-    <section aria-labelledby="auspiciadores" className="border-t border-white/10 bg-ink py-14">
+    <section aria-labelledby="auspiciadores" className="border-b border-white/10 bg-ink py-8 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 id="auspiciadores" className="text-center font-display text-sm font-bold uppercase tracking-[0.3em] text-sport">
           Nos auspician
         </h2>
-        <ul className="mt-8 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
+        <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
           {sponsors.map((s) => {
             const content = s.logo ? (
               <Image src={s.logo} alt={s.name} width={240} height={80} className="h-16 w-auto max-w-[240px] sm:h-20 object-contain opacity-80 transition hover:opacity-100" />

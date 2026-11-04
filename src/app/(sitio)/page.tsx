@@ -118,6 +118,9 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* AUSPICIADORES (arriba, justo después de la portada) */}
+      <Sponsors sponsors={sponsors} />
+
       {/* ACCESOS RÁPIDOS */}
       <nav aria-label="Accesos rápidos" className="border-b border-white/10 bg-petrol-950">
         <ul className="mx-auto grid max-w-7xl grid-cols-3 px-4 sm:px-6 md:grid-cols-6 lg:px-8">
@@ -251,8 +254,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      <Sponsors sponsors={sponsors} />
 
       {/* CTA FINAL */}
       <section className="relative overflow-hidden bg-sport text-ink">
