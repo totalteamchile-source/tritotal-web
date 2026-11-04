@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav } from "@/config/site";
 import { Logo } from "./Logo";
-import { CartButton } from "./shop/CartButton";
 
 export function Header() {
   const pathname = usePathname();
@@ -57,7 +56,6 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <CartButton />
           <Link
             href="/inscripcion"
             className="hidden rounded-sm bg-sport px-5 py-2.5 font-display text-sm font-bold uppercase tracking-wider text-ink transition hover:bg-sport-600 sm:inline-block"

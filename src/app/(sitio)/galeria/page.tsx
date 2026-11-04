@@ -6,7 +6,7 @@ import { PageHero, Pending, PhotoSlot, Section, SectionTitle } from "@/component
 
 export const metadata: Metadata = {
   title: "Galería y comunidad",
-  description: "Fotos, videos y noticias del equipo Tritotal Team: entrenamientos, competencias y actividades.",
+  description: "Fotos y videos del equipo Tritotal Team: entrenamientos, competencias y actividades.",
 };
 
 export const revalidate = 300; // también se refresca al instante al editar en el panel
@@ -14,10 +14,10 @@ export const revalidate = 300; // también se refresca al instante al editar en 
 const categories = ["Equipo", "Entrenamientos", "Competencias", "Actividades sociales"] as const;
 
 export default async function GaleriaPage() {
-  const { photos, videos, news } = await getGallery();
+  const { photos, videos } = await getGallery();
   return (
     <>
-      <PageHero eyebrow="Galería y comunidad" title={<>Vive el <span className="text-sport">equipo</span></>} intro="Fotos del equipo, entrenamientos, competencias, actividades sociales, videos y noticias." />
+      <PageHero eyebrow="Galería y comunidad" title={<>Vive el <span className="text-sport">equipo</span></>} intro="Fotos del equipo, entrenamientos, competencias, actividades sociales y videos." />
 
       <Section>
         {categories.map((cat) => {
@@ -78,27 +78,6 @@ export default async function GaleriaPage() {
         )}
       </Section>
 
-      <Section>
-        <SectionTitle eyebrow="Noticias" title="Noticias del equipo" />
-        {news.length ? (
-          <div className="grid gap-6 md:grid-cols-3">
-            {news.map((n) => (
-              <article key={n.title} className="border-t-2 border-sport pt-5">
-                {n.image && (
-                  <div className="relative mb-4 aspect-video overflow-hidden">
-                    <Image src={n.image} alt="" fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover" />
-                  </div>
-                )}
-                <p className="text-sm text-mist">{n.date}</p>
-                <h3 className="mt-2 font-display text-2xl font-bold uppercase">{n.title}</h3>
-                <p className="mt-2 whitespace-pre-line text-mist">{n.summary}</p>
-              </article>
-            ))}
-          </div>
-        ) : (
-          <Pending label="Noticias por publicar" />
-        )}
-      </Section>
     </>
   );
 }

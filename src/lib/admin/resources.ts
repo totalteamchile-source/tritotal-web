@@ -319,7 +319,7 @@ export const resources: Resource[] = [
     ],
     columns: ["fecha", "titulo", "publicado"],
     orderBy: [{ column: "fecha", ascending: false }],
-    revalidate: ["/galeria"],
+    revalidate: ["/noticias", "/"],
   },
   {
     slug: "valores",
