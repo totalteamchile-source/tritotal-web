@@ -102,6 +102,14 @@ y redirige a **Mercado Pago Checkout Pro**. El sitio nunca recibe datos de tarje
 3. En la aplicación → **Webhooks**: URL `https://www.tritotalteam.cl/api/pagos/mercadopago`, evento **Pagos**.
    Copiar la clave secreta a `MERCADOPAGO_WEBHOOK_SECRET`. Hacer **Redeploy**.
 
+### Productos digitales (PDF)
+
+- Marcar el producto como «Producto digital (PDF)» y subir el archivo en «Archivo PDF» (panel → Productos tienda).
+- El PDF se guarda en el bucket **privado** `productos-digitales` (lo crea `0009_productos_digitales.sql`). Nunca poner PDFs en `public/` ni en el repositorio, que es público.
+- Tras el pago confirmado, el comprador ve el botón de descarga en `/tienda/pedido/[id]` y recibe el enlace por correo. `/api/descargas/[pedido]/[producto]` verifica que el pedido esté pagado y redirige a un enlace firmado que vence en 2 minutos.
+- Si el pedido se pagó por WhatsApp, al marcarlo «pagado» en el panel el enlace de descarga queda activo.
+- Sin Supabase configurado, la ficha muestra «Comprar por WhatsApp» (productos de respaldo en `src/content/products.ts`).
+
 ## Nuestros deportistas
 
 Página `/deportistas`. Se muestra un deportista cuando en el panel se marca **«Mostrar en Nuestros deportistas»**

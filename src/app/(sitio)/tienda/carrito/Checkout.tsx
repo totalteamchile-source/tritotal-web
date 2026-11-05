@@ -16,6 +16,8 @@ export function Checkout() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
 
+  const soloDigital = items.length > 0 && items.every((i) => i.digital);
+
   if (!ready) return null;
   if (!items.length)
     return (
@@ -33,7 +35,7 @@ export function Checkout() {
       nombre: String(fd.get("nombre") ?? ""),
       email: String(fd.get("email") ?? ""),
       telefono: String(fd.get("telefono") ?? ""),
-      entrega,
+      entrega: soloDigital ? "digital" : entrega,
       direccion: String(fd.get("direccion") ?? "") || undefined,
       comuna: String(fd.get("comuna") ?? "") || undefined,
       notas: String(fd.get("notas") ?? "") || undefined,
@@ -63,22 +65,22 @@ export function Checkout() {
           {items.map((i) => (
             <li key={i.producto_id + i.talla} className="flex gap-4 py-5">
               <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-sm bg-petrol-900">
-                {i.imagen_url && <Image src={i.imagen_url} alt="" fill sizes="96px" className="object-cover" />}
+                {i.imagen_url && <Image src={i.imagen_url} alt="" fill sizes="96px" className={i.digital ? "object-contain p-1" : "object-cover"} />}
               </div>
               <div className="flex flex-1 flex-col">
                 <div className="flex justify-between gap-3">
                   <div>
                     <Link href={`/tienda/${i.producto_id}`} className="font-display text-xl font-bold uppercase hover:text-sport">{i.nombre}</Link>
-                    <p className="text-sm text-mist">Talla: {i.talla}</p>
+                    <p className="text-sm text-mist">{i.digital ? "PDF · descarga tras el pago" : `Talla: ${i.talla}`}</p>
                   </div>
                   <p className="font-semibold">{formatCLP(i.precio * i.cantidad)}</p>
                 </div>
                 <div className="mt-auto flex items-center gap-4 pt-3">
-                  <div className="flex items-center rounded-sm border border-white/20">
+                  {!i.digital && <div className="flex items-center rounded-sm border border-white/20">
                     <button type="button" onClick={() => setQty(i.producto_id, i.talla, i.cantidad - 1)} className="h-9 w-9" aria-label="Menos">−</button>
                     <span className="w-8 text-center text-sm">{i.cantidad}</span>
                     <button type="button" onClick={() => setQty(i.producto_id, i.talla, Math.min(MAX_POR_ITEM, i.cantidad + 1))} className="h-9 w-9" aria-label="Más">+</button>
-                  </div>
+                  </div>}
                   <button type="button" onClick={() => remove(i.producto_id, i.talla)} className="text-sm text-mist underline-offset-4 hover:text-white hover:underline">Quitar</button>
                 </div>
               </div>
@@ -110,6 +112,11 @@ export function Checkout() {
           {errors.telefono && <p className="mt-1 text-sm text-red-300">{errors.telefono}</p>}
         </div>
 
+        {soloDigital ? (
+          <p className="rounded-sm border border-white/10 bg-ink/40 p-4 text-sm text-mist">
+            Recibirás el enlace de descarga en tu correo apenas se confirme el pago. Revisa que esté bien escrito.
+          </p>
+        ) : (
         <fieldset>
           <legend className="mb-2 text-sm font-semibold">Entrega</legend>
           <div className="grid grid-cols-2 gap-2">
@@ -131,7 +138,8 @@ export function Checkout() {
               : "El costo de despacho no está incluido: lo coordinamos contigo por WhatsApp antes de enviar."}
           </p>
         </fieldset>
-        {entrega === "despacho" && (
+        )}
+        {!soloDigital && entrega === "despacho" && (
           <div className="grid gap-3 sm:grid-cols-[2fr_1fr]">
             <div>
               <input name="direccion" placeholder="Dirección" autoComplete="street-address" className={input} aria-label="Dirección" />

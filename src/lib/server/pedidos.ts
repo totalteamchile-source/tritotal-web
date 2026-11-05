@@ -4,22 +4,23 @@ import { sendMail, escapeHtml } from "./mail";
 import { env } from "./env";
 import { site } from "@/config/site";
 import type { MpPayment } from "./mercadopago";
+import { enlaceDescarga } from "./descargas";
 
 const clp = (n: number) => new Intl.NumberFormat("es-CL", { style: "currency", currency: "CLP", maximumFractionDigits: 0 }).format(n);
 
 type Pedido = {
   id: string; numero: string; estado: string; nombre: string; email: string; telefono: string;
   entrega: string; direccion: string | null; comuna: string | null; notas: string | null;
-  items: { nombre: string; talla: string; cantidad: number; precio: number }[]; total: number;
+  items: { producto_id: string; nombre: string; talla: string; cantidad: number; precio: number; digital?: boolean }[]; total: number;
 };
 
 export function resumenPedidoHtml(p: Pedido) {
   const rows = p.items
-    .map((i) => `<tr><td>${escapeHtml(i.nombre)} (${escapeHtml(i.talla)})</td><td align="center">${i.cantidad}</td><td align="right">${clp(i.precio * i.cantidad)}</td></tr>`)
+    .map((i) => `<tr><td>${escapeHtml(i.nombre)} (${i.digital ? "PDF" : escapeHtml(i.talla)})</td><td align="center">${i.cantidad}</td><td align="right">${clp(i.precio * i.cantidad)}</td></tr>`)
     .join("");
   return `<table cellpadding="6" style="border-collapse:collapse;font-family:Arial,sans-serif;font-size:14px">
     ${rows}<tr><td colspan="2"><b>Total</b></td><td align="right"><b>${clp(p.total)}</b></td></tr></table>
-    <p style="font-family:Arial,sans-serif;font-size:14px">Entrega: ${p.entrega === "retiro" ? "Retiro (se coordina por WhatsApp)" : `Despacho a ${escapeHtml(p.direccion ?? "")}, ${escapeHtml(p.comuna ?? "")}`}</p>`;
+    <p style="font-family:Arial,sans-serif;font-size:14px">Entrega: ${p.entrega === "digital" ? "Descarga digital" : p.entrega === "retiro" ? "Retiro (se coordina por WhatsApp)" : `Despacho a ${escapeHtml(p.direccion ?? "")}, ${escapeHtml(p.comuna ?? "")}`}</p>`;
 }
 
 /**
@@ -49,9 +50,16 @@ export async function aplicarPago(pago: MpPayment) {
     if (!upd?.length) return;
     await db.rpc("descontar_stock", { p_pedido: pedido.id });
     const html = resumenPedidoHtml(pedido);
+    const digitales = pedido.items.filter((i) => i.digital);
+    const fisicos = pedido.items.some((i) => !i.digital);
+    const descargas = digitales.length
+      ? `<p style="font-family:Arial,sans-serif;font-size:14px">Descarga tu${digitales.length > 1 ? "s" : ""} PDF aquí (guarda este correo):</p><ul style="font-family:Arial,sans-serif;font-size:14px">${digitales
+          .map((i) => `<li><a href="${enlaceDescarga(pedido.id, i.producto_id)}">${escapeHtml(i.nombre)}</a></li>`)
+          .join("")}</ul>`
+      : "";
     await Promise.all([
       sendMail(env.adminEmail, `Nueva compra ${pedido.numero}: ${pedido.nombre}`, `<h2>Pedido pagado ${pedido.numero}</h2><p>${escapeHtml(pedido.nombre)} · ${escapeHtml(pedido.telefono)} · ${escapeHtml(pedido.email)}</p>${html}`, pedido.email),
-      sendMail(pedido.email, `Tu compra en ${site.name} (${pedido.numero})`, `<p>¡Gracias, ${escapeHtml(pedido.nombre.split(" ")[0])}! Recibimos el pago de tu pedido <b>${pedido.numero}</b>. Te contactaremos para coordinar la entrega.</p>${html}`),
+      sendMail(pedido.email, `Tu compra en ${site.name} (${pedido.numero})`, `<p>¡Gracias, ${escapeHtml(pedido.nombre.split(" ")[0])}! Recibimos el pago de tu pedido <b>${pedido.numero}</b>.${fisicos ? " Te contactaremos para coordinar la entrega." : ""}</p>${descargas}${html}`),
     ]);
   } else if (["rejected", "cancelled"].includes(pago.status)) {
     await db.from("pedidos").update({ estado: "rechazado", pago_id: String(pago.id), pago_estado: pago.status }).eq("id", pedido.id).eq("estado", "pendiente_pago");

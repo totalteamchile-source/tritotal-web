@@ -93,6 +93,29 @@ function FieldInput({ f, value, relations }: { f: Field; value: unknown; relatio
         </div>
       );
     }
+    case "pdf": {
+      const path = asString(value);
+      return (
+        <div className="space-y-3">
+          {path && (
+            <div className="flex flex-wrap items-center gap-4 text-sm">
+              <span className="rounded-sm bg-white/10 px-3 py-1.5">✓ PDF cargado</span>
+              <label className="flex items-center gap-2 text-mist">
+                <input type="checkbox" name={`${f.name}__remove`} className="accent-[var(--color-sport)]" /> Quitar archivo
+              </label>
+            </div>
+          )}
+          <input type="hidden" name={f.name} value={path} />
+          <input
+            type="file"
+            name={`${f.name}__file`}
+            accept="application/pdf"
+            className="block w-full text-sm text-mist file:mr-4 file:rounded-sm file:border-0 file:bg-petrol-700 file:px-4 file:py-2 file:text-white"
+          />
+          <p className="text-xs text-mist/70">{path ? "Sube otro PDF para reemplazarlo. " : ""}PDF de hasta 4 MB.</p>
+        </div>
+      );
+    }
     default:
       return <input {...common} defaultValue={asString(value)} className={inputCls} />;
   }
@@ -107,7 +130,7 @@ export function ResourceForm({ fields, values, relations, action, cancelHref }: 
     <form onSubmit={onSubmit} className="space-y-8">
       <div className="grid gap-5 sm:grid-cols-2">
         {editable.map((f) => (
-          <div key={f.name} className={f.wide || f.type === "textarea" || f.type === "list" || f.type === "image" ? "sm:col-span-2" : ""}>
+          <div key={f.name} className={f.wide || f.type === "textarea" || f.type === "list" || f.type === "image" || f.type === "pdf" ? "sm:col-span-2" : ""}>
             <label htmlFor={f.name} className="mb-1.5 block text-sm font-semibold">
               {f.label} {f.required && <span className="text-sport">*</span>}
             </label>

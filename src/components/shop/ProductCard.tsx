@@ -8,7 +8,8 @@ export function ProductCard({ p }: { p: Producto }) {
   return (
     <Link href={`/tienda/${p.id}`} className="group block overflow-hidden rounded-sm border border-white/10 bg-petrol-950 transition hover:border-sport/60">
       <div className="relative">
-        <PhotoSlot src={p.imagen_url} alt={p.nombre} label="Foto pendiente" className="aspect-square transition group-hover:opacity-90" sizes="(min-width:1024px) 25vw, 50vw" />
+        <PhotoSlot src={p.imagen_url} alt={p.nombre} label="Foto pendiente" fit={p.digital ? "contain" : "cover"} className="aspect-square transition group-hover:opacity-90" sizes="(min-width:1024px) 25vw, 50vw" />
+        {p.digital && <span className="absolute left-3 top-3 rounded-full bg-sport px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink">PDF</span>}
         {out && <span className="absolute left-3 top-3 rounded-full bg-ink/90 px-3 py-1 text-xs font-semibold uppercase tracking-wider">Agotado</span>}
       </div>
       <div className="p-4">

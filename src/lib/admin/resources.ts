@@ -14,6 +14,7 @@ export type FieldType =
   | "list" // una línea por elemento (text[])
   | "checkbox"
   | "image"
+  | "pdf" // archivo PDF en almacenamiento privado (se guarda la ruta, no una URL pública)
   | "relation"
   | "variants" // tallas con stock (jsonb)
   | "items"; // detalle de productos de un pedido (solo lectura)
@@ -191,7 +192,14 @@ export const resources: Resource[] = [
         type: "variants",
         required: true,
         wide: true,
-        help: "Una talla por línea con su stock, ej. «M: 5». Sin número = sin control de stock. Para productos sin talla, escribe «Única».",
+        help: "Una talla por línea con su stock, ej. «M: 5». Sin número = sin control de stock. Para productos sin talla, escribe «Única». Para un PDF, escribe «PDF».",
+      },
+      { name: "digital", label: "Producto digital (PDF)", type: "checkbox", help: "Sin envío ni stock: el comprador lo descarga apenas se confirma el pago." },
+      {
+        name: "archivo",
+        label: "Archivo PDF",
+        type: "pdf",
+        help: "Solo para productos digitales. Se guarda en un almacenamiento privado: nadie puede verlo sin haber pagado.",
       },
       { name: "activo", label: "Visible en la tienda", type: "checkbox" },
     ],

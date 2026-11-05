@@ -45,5 +45,6 @@ export const nav = [
   { href: "/competencias", label: "Competencias" },
   { href: "/galeria", label: "Galería" },
   { href: "/noticias", label: "Noticias" },
+  { href: "/tienda", label: "Tienda" },
   { href: "/contacto", label: "Contacto" },
 ];

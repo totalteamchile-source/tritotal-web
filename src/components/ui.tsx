@@ -130,8 +130,11 @@ export function PhotoSlot({
   priority,
   sizes = "(min-width: 1024px) 33vw, 100vw",
   position,
+  fit = "cover",
 }: {
   position?: string;
+  /** "contain" muestra la imagen completa (portadas de libros, logos). */
+  fit?: "cover" | "contain";
   src?: string | null;
   alt: string;
   discipline?: "natacion" | "ciclismo" | "running";
@@ -144,7 +147,7 @@ export function PhotoSlot({
   return (
     <div className={`relative overflow-hidden bg-petrol-900 ${className}`}>
       {src ? (
-        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className="object-cover" style={{ objectPosition: position ?? (src ? photoMeta[src]?.focus : undefined) ?? "50% 35%" }} />
+        <Image src={src} alt={alt} fill sizes={sizes} priority={priority} className={fit === "contain" ? "object-contain p-4" : "object-cover"} style={{ objectPosition: position ?? (src ? photoMeta[src]?.focus : undefined) ?? "50% 35%" }} />
       ) : (
         <div className="bg-lanes absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gradient-to-br from-petrol-800 via-petrol-900 to-ink text-petrol-300">
           {Icon && <Icon className="h-16 w-16 opacity-70" />}

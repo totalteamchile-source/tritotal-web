@@ -6,6 +6,7 @@ import { plans as localPlans, type Plan } from "@/content/plans";
 import { weeklySchedule, competitions as localComps, results as localResults, type ScheduleItem, type Competition, type Result } from "@/content/events";
 import { about as localAbout } from "@/content/about";
 import { athletes as localAthletes } from "@/content/athletes";
+import { products as localProducts } from "@/content/products";
 import { sponsors as localSponsors, type Sponsor } from "@/content/sponsors";
 import { photos as localPhotos, videos as localVideos, news as localNews, type GalleryCategory } from "@/content/gallery";
 
@@ -137,14 +138,18 @@ export const getGallery = () =>
     { photos: localPhotos, videos: localVideos, news: localNews as { date: string; title: string; summary: string; image?: string }[] },
   );
 
-const PRODUCT_COLS = "id,nombre,descripcion,categoria,precio,imagen_url,variantes";
+const PRODUCT_COLS = "id,nombre,descripcion,categoria,precio,imagen_url,variantes,digital";
 
+// Sin base de datos (o sin la migración 0009) se muestran los productos de src/content/products.ts.
 export const getProducts = () =>
-  fromDb<Producto[]>(async (db) => must(await db.from("productos").select(PRODUCT_COLS).eq("activo", true).order("orden").order("creado_en")) as Producto[], []);
+  fromDb<Producto[]>(async (db) => must(await db.from("productos").select(PRODUCT_COLS).eq("activo", true).order("orden").order("creado_en")) as Producto[], localProducts);
 
 export const getProduct = (id: string) =>
   /^[0-9a-f-]{36}$/.test(id)
-    ? fromDb<Producto | null>(async (db) => must(await db.from("productos").select(PRODUCT_COLS).eq("id", id).eq("activo", true).maybeSingle()) as Producto | null, null)
+    ? fromDb<Producto | null>(
+        async (db) => must(await db.from("productos").select(PRODUCT_COLS).eq("id", id).eq("activo", true).maybeSingle()) as Producto | null,
+        localProducts.find((p) => p.id === id) ?? null,
+      )
     : Promise.resolve(null);
 
 export type DeportistaPublico = {

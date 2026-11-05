@@ -10,7 +10,12 @@ export type Producto = {
   precio: number;
   imagen_url: string | null;
   variantes: Variante[];
+  /** Producto digital (PDF): sin tallas, stock ni envío; se descarga tras el pago. */
+  digital?: boolean;
 };
+
+/** Única "talla" de los productos digitales. */
+export const FORMATO_DIGITAL = "PDF";
 
 export type CartItem = {
   producto_id: string;
@@ -20,6 +25,7 @@ export type CartItem = {
   nombre: string;
   precio: number;
   imagen_url: string | null;
+  digital?: boolean;
 };
 
 export const MAX_POR_ITEM = 10;

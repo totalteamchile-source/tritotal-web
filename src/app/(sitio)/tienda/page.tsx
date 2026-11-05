@@ -7,7 +7,7 @@ export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Tienda",
-  description: "Poleras, gorros y accesorios oficiales de Tritotal Team.",
+  description: "Guías en PDF y productos oficiales de Tritotal Team.",
 };
 
 export default async function TiendaPage() {
@@ -15,7 +15,7 @@ export default async function TiendaPage() {
   const cats = [...new Set(products.map((p) => p.categoria))];
   return (
     <>
-      <PageHero eyebrow="Tienda oficial" title={<>Viste los colores del <span className="text-sport">equipo</span></>} intro="Poleras, gorros y accesorios Tritotal Team." />
+      <PageHero eyebrow="Tienda oficial" title={<>Tienda <span className="text-sport">Tritotal</span></>} intro="Guías en PDF escritas por nuestro entrenador y productos oficiales del equipo." />
       <Section>
         {products.length ? (
           cats.map((c) => (

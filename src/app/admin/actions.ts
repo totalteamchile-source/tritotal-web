@@ -36,6 +36,18 @@ async function uploadImage(file: File) {
   return db().storage.from("medios").getPublicUrl(path).data.publicUrl;
 }
 
+const MAX_PDF = 4 * 1024 * 1024;
+
+/** Sube un PDF al bucket PRIVADO de productos digitales y devuelve su ruta (no una URL). */
+async function uploadPdf(file: File) {
+  if (file.type !== "application/pdf") throw new Error("El archivo debe ser un PDF.");
+  if (file.size > MAX_PDF) throw new Error("El PDF supera 4 MB. Comprímelo antes de subirlo o súbelo desde Supabase → Storage → productos-digitales.");
+  const path = `${randomUUID()}.pdf`;
+  const { error } = await db().storage.from("productos-digitales").upload(path, file, { contentType: "application/pdf" });
+  if (error) throw new Error("No se pudo subir el PDF: " + error.message + " (¿ejecutaste la migración 0009?)");
+  return path;
+}
+
 async function readField(f: Field, fd: FormData): Promise<unknown> {
   const raw = fd.get(f.name);
   const str = typeof raw === "string" ? raw.trim() : "";
@@ -60,6 +72,12 @@ async function readField(f: Field, fd: FormData): Promise<unknown> {
       const file = fd.get(`${f.name}__file`);
       if (fd.get(`${f.name}__remove`) === "on") return null;
       if (file instanceof File && file.size > 0) return uploadImage(file);
+      return str || null;
+    }
+    case "pdf": {
+      const file = fd.get(`${f.name}__file`);
+      if (fd.get(`${f.name}__remove`) === "on") return null;
+      if (file instanceof File && file.size > 0) return uploadPdf(file);
       return str || null;
     }
     default:

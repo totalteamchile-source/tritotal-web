@@ -4,8 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/components/shop/CartProvider";
 import { MAX_POR_ITEM, stockDe, type Producto } from "@/lib/shop";
+import { whatsappLink } from "@/lib/whatsapp";
+import { formatCLP } from "@/content/plans";
+import { WhatsAppIcon } from "@/components/Icons";
 
-export function AddToCart({ p }: { p: Producto }) {
+/** `canOrder` es falso cuando la tienda en línea aún no está habilitada: se compra por WhatsApp. */
+export function AddToCart({ p, canOrder = true }: { p: Producto; canOrder?: boolean }) {
   const { add, items } = useCart();
   const disponibles = p.variantes.filter((v) => v.stock === null || v.stock > 0);
   const [talla, setTalla] = useState(disponibles.length === 1 ? disponibles[0].talla : "");
@@ -16,6 +20,43 @@ export function AddToCart({ p }: { p: Producto }) {
   const enCarrito = items.filter((i) => i.producto_id === p.id && i.talla === talla).reduce((a, i) => a + i.cantidad, 0);
   const max = talla ? Math.min(MAX_POR_ITEM, stockDe(p, talla) - enCarrito) : MAX_POR_ITEM;
   const soloUnica = p.variantes.length === 1;
+
+  const enCarritoDigital = p.digital && items.some((i) => i.producto_id === p.id);
+
+  if (!canOrder)
+    return (
+      <div className="mt-8 space-y-3">
+        <a
+          href={whatsappLink(`Hola, quiero comprar «${p.nombre}» (${formatCLP(p.precio)}) de la tienda de Tritotal Team.`)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#25D366] px-8 py-4 font-display text-lg font-bold uppercase tracking-wider text-ink"
+        >
+          <WhatsAppIcon className="h-5 w-5" /> Comprar por WhatsApp
+        </a>
+        <p className="text-sm text-mist">Coordinamos el pago contigo y te enviamos {p.digital ? "el PDF por correo" : "el detalle de la entrega"}.</p>
+      </div>
+    );
+
+  if (p.digital)
+    return (
+      <div className="mt-8 space-y-4">
+        <p className="text-sm text-mist">Formato PDF. Recibes el enlace de descarga apenas se confirma el pago.</p>
+        <div className="flex flex-col gap-3 sm:flex-row">
+          {!enCarritoDigital && !added && (
+            <button type="button" onClick={() => { add({ producto_id: p.id, talla: p.variantes[0]?.talla ?? "PDF", cantidad: 1, nombre: p.nombre, precio: p.precio, imagen_url: p.imagen_url, digital: true }); setAdded(true); }} className="rounded-sm bg-sport px-8 py-4 font-display text-lg font-bold uppercase tracking-wider text-ink hover:bg-sport-600">
+              Agregar al carrito
+            </button>
+          )}
+          {(enCarritoDigital || added) && (
+            <Link href="/tienda/carrito" className="rounded-sm bg-sport px-8 py-4 text-center font-display text-lg font-bold uppercase tracking-wider text-ink hover:bg-sport-600">
+              Ir al carrito y pagar →
+            </Link>
+          )}
+        </div>
+        {(enCarritoDigital || added) && <p role="status" className="text-sm text-sport">✓ Está en tu carrito</p>}
+      </div>
+    );
 
   if (!disponibles.length) return <p className="mt-8 rounded-sm border border-white/15 p-4 text-mist">Producto agotado por ahora.</p>;
 
